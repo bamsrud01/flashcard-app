@@ -1,0 +1,11 @@
+{
+  "name": "flashcard-app",
+  "version": "1.0.0",
+  "description": "Flashcard App - Solo Project for Prime Digital Academy",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Barrett Amsrud",
+  "license": "ISC"
+}
