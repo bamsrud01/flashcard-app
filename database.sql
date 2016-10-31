@@ -15,12 +15,13 @@ CREATE TABLE users_sets (
   set_name varchar(120) NOT NULL
 );
 
---  This table will hold comments on entire card sets, not individual cards
+--  This table will hold comments on entire card sets, as well as rating.
 CREATE TABLE set_comments (
   id SERIAL PRIMARY KEY,
   user_id INT,
   set_id INT,
-  comment TEXT
+  comment TEXT,
+  rating INT
 );
 
 --  This table will hold comments on individual cards
@@ -29,4 +30,22 @@ CREATE TABLE card_comments (
   user_id INT,
   card_id INT,
   comment TEXT
+);
+
+--  This table will hold user login information.  The password will hold the hashed value
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username varchar(40),
+  password varchar(120),
+  email varchar(80)
+);
+
+--  This table will hold data from the users' activities
+CREATE TABLE user_data (
+  id SERIAL PRIMARY KEY,
+  user_id INT,
+  set_id INT,
+  date_used TIMESTAMP,
+  correct INT,
+  total INT
 );
