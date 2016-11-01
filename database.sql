@@ -1,17 +1,15 @@
---  This table will hold all cards from all sets and users
+--  This table will hold all cards from all sets and users.
 CREATE TABLE cards (
   id SERIAL PRIMARY KEY,
-  user_id INT NOT NULL,
   set_id INT NOT NULL,
   question varchar(255) NOT NULL,
   answer varchar(255) NOT NULL
 );
 
---  This table will hold all users and the sets they have created
-CREATE TABLE users_sets (
+--  This table will hold all users and the sets they have created.
+CREATE TABLE sets (
   id SERIAL PRIMARY KEY,
-  user_id INT,
-  set_id INT,
+  user_id INT NOT NULL,
   set_name varchar(120) NOT NULL
 );
 
@@ -24,7 +22,7 @@ CREATE TABLE set_comments (
   rating INT
 );
 
---  This table will hold comments on individual cards
+--  This table will hold comments on individual cards.
 CREATE TABLE card_comments (
   id SERIAL PRIMARY KEY,
   user_id INT,
@@ -32,7 +30,7 @@ CREATE TABLE card_comments (
   comment TEXT
 );
 
---  This table will hold user login information.  The password will hold the hashed value
+--  This table will hold user login information.  The password will be hashed.
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username varchar(40),
@@ -40,12 +38,13 @@ CREATE TABLE users (
   email varchar(80)
 );
 
---  This table will hold data from the users' activities
+--  This table will hold data from the users' activities.
 CREATE TABLE user_data (
   id SERIAL PRIMARY KEY,
   user_id INT,
   set_id INT,
   date_used TIMESTAMP,
   correct INT,
-  total INT
+  total INT,
+  proficiency INT
 );
