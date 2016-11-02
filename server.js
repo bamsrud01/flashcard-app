@@ -32,8 +32,11 @@ app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//  Connect routes
+//  Create routes
+const register = require('./routes/register');
 
+//  Connect routes
+app.use('/register', register);
 
 //  Create port
 var port = process.env.PORT || 3000;
