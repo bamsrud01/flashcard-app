@@ -79,7 +79,8 @@ function create(username, password) {
   });
 }
 
-//  Compare passwordfunction comparePassword(user, passwordToCompare) {
+//  Compare password
+function comparePassword(user, passwordToCompare) {
   return new Promise(function(resolve){
     bcrypt.compare(passwordToCompare, user.password, function(err, match){
       if (err) {
