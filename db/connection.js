@@ -7,7 +7,7 @@ var config= {
 };
 
 //  Set connection pool
-var pool = new pg.pool(config);
+var pool = new pg.Pool(config);
 
 //  Export file
 module.exports = pool;
