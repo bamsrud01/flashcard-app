@@ -17,6 +17,8 @@ function MainService($http, $location, $q) {
   };
 
   service.logOutUser = function() {
-    return $http.post('register/logout');
+    return $http.post('register/logout').then(function() {
+      return $location.path('/home');
+    });
   }
 }

@@ -1,1 +1,22 @@
 <h1>Home</h1>
+<div class="row">
+  <h3 class="col-md-2">Categories</h3>
+</div>
+<div class="row">
+  <aside class="col-md-2">
+    <!-- Sidebar with categories -->
+    <button class="col-md-offset-2 col-md-8 btn btn-success">Top Rated</button>
+    <button class="col-md-offset-2 col-md-8 btn btn-success">Favorited</button>
+    <button class="col-md-offset-2 col-md-8 btn btn-primary" ng-repeat="category in home.categories" ng-click="home.getSetsByCategory(category)">{{category}}</button>
+  </aside>
+  <section class="col-md-8">
+    <!-- Main section -->
+    <h2>Some Main Stuff</h2>
+  </section>
+  <aside class="col-md-2">
+    <!-- Display for set comments -->
+    <p>
+      Some more stuff
+    </p>
+  </aside>
+</div>

@@ -45,6 +45,7 @@
         </ul>
         <!-- Show this form if the user is not logged in. -->
         <form ng-hide="main.nav.state.loggedIn" class="navbar-form navbar-right">
+          <label class="label label-danger" ng-show="main.loginFail">Incorrect username or password.  Try again.</label>
           <a href="/register"><button class="btn btn-success">Register</button></a>
           <div class="form-group">
             <label>Log In:</label>
