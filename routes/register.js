@@ -1,3 +1,5 @@
+//  This router will handle username registration.
+
 //  Declare file as a router
 const router = require('express').Router();
 
@@ -7,7 +9,6 @@ const pool = require('../db/connection.js');
 //  GET function to check existing usernames
 router.get('/check', function(req, res) {
   var username = req.query.username;
-  console.log('Sent username:', username);
   pool.connect(function(err, client, done) {
     try {
       if (err) {

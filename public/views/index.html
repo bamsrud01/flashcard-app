@@ -41,6 +41,7 @@
             <a href="/calendar">Calendar</a>
           </li>
         </ul>
+        <!-- Show this form if the user is not logged in. -->
         <form ng-hide="main.loggedIn" class="navbar-form navbar-right">
           <a href="/register"><button class="btn btn-success">Register</button></a>
           <div class="form-group">
@@ -50,6 +51,7 @@
           </div>
           <button type="submit" class="btn btn-success">Log In</button>
         </form>
+        <!-- Show this form if the user is logged in. -->
         <form ng-show="main.loggedIn" class="navbar-form navbar-right">
           <div class="form-group">
             <h4>Welcome, {{main.name}}!</h4>
@@ -60,7 +62,9 @@
     </nav>
     <!-- Content will vary -->
     <main class="container-fluid">
+
       <ng-view></ng-view>
+      
     </main>
   </body>
 </html>

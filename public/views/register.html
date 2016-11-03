@@ -26,12 +26,12 @@
     </div>
   </div>
   <div class="row">
-    <div ng-show="register.existingUsername" class="alert alert-warning">
+    <div ng-show="register.userData.existingUsername" class="alert alert-warning">
       <h4>Sorry, that username has already been chosen.</h4>
     </div>
   </div>
   <div class="row">
-    <div ng-hide="register.validEmail" class="alert alert-warning">
+    <div ng-hide="register.userData.validEmail || register.newEmail == undefined" class="alert alert-warning">
       <h4>Please enter a valid email address.</h4>
     </div>
   </div>
@@ -47,5 +47,10 @@
   </div>
   <div class="row">
     <button class=" col-md-offset-3 col-md-6 btn btn-success btn-lg" ng-click="register.requirements()">Sign Up Now!</button>
+  </div>
+  <div class="row">
+    <div ng-show="register.userData.successful" class="alert alert-success">
+      <h4>You have been registered!</h4>
+    </div>
   </div>
 </form>

@@ -5,17 +5,23 @@ function RegisterController(RegisterService) {
   var register = this;
 
   //  These values control the messages to the user when creating an account.
-  register.existingUsername = false;
-  register.validEmail = false;
+  register.userData = {
+    existingUsername: false,
+    validEmail: false,
+    successful: false
+  }
+  // register.existingUsername = false;
+  // register.validEmail = false;
+  // register.successful = false;
 
   //  Function checks if the user enters a valid email.
   register.validateEmail = function() {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(register.newEmail)) {
       console.log('Email is valid');
-      register.validEmail = true;
+      register.userData.validEmail = true;
     } else {
       console.log('Email is NOT valid.');
-      register.validEmail = false;
+      register.userData.validEmail = false;
     }
   };
 
@@ -24,24 +30,36 @@ function RegisterController(RegisterService) {
     console.log('Sending username:', register.newUsername);
     RegisterService.checkUsername(register.newUsername).then(function(result) {
       if (result.length == 0) {
-        register.existingUsername = false;
+        register.userData.existingUsername = false;
       } else {
-        register.existingUsername = true;
+        register.userData.existingUsername = true;
       }
     });
   };
 
   //  Function to check all account requirements
   register.requirements = function() {
-    if (!register.existingUsername && register.validEmail && (register.newPassword == register.confirmPassword) && register.newPassword.length >= 8) {
+    if (!register.userData.existingUsername &&
+      register.userData.validEmail &&
+      (register.newPassword == register.confirmPassword)
+      && register.newPassword.length >= 8) {
       console.log('Requirements have been met!');
+      register.user = {};
+      register.user.username = register.newUsername;
+      register.user.email = register.newEmail;
+      register.user.password = register.newPassword;
       register.registerUser();
+      // MainController.changeLoggedState(true);
+      // MainController.setUsername(register.newUsername);
     } else {
       console.log('Requirements have NOT been met.');
     }
   };
 
+  //  Send registration info to database
   register.registerUser = function() {
-
+    RegisterService.register(register.user);
+    register.userData.successful = true;
+    register.user = {};
   }
 }
