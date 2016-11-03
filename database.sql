@@ -9,14 +9,14 @@ CREATE TABLE cards (
 --  This table will hold all users and the sets they have created.
 CREATE TABLE sets (
   id SERIAL PRIMARY KEY,
-  user_id INT NOT NULL,
+  username varchar(40) NOT NULL,
   set_name varchar(120) NOT NULL
 );
 
 --  This table will hold comments on entire card sets, as well as rating.
 CREATE TABLE set_comments (
   id SERIAL PRIMARY KEY,
-  user_id INT,
+  username varchar(40),
   set_id INT,
   comment TEXT,
   rating INT
@@ -25,7 +25,7 @@ CREATE TABLE set_comments (
 --  This table will hold comments on individual cards.
 CREATE TABLE card_comments (
   id SERIAL PRIMARY KEY,
-  user_id INT,
+  username varchar(40),
   card_id INT,
   comment TEXT
 );
@@ -41,10 +41,11 @@ CREATE TABLE users (
 --  This table will hold data from the users' activities.
 CREATE TABLE user_data (
   id SERIAL PRIMARY KEY,
-  user_id INT,
+  username varchar(40),
   set_id INT,
   date_used TIMESTAMP,
   correct INT,
   total INT,
-  proficiency INT
+  proficiency INT,
+  review_date TIMESTAMP
 );
