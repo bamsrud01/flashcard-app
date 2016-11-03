@@ -1,7 +1,7 @@
 angular.module('flashcardApp')
   .service('RegisterService', RegisterService);
 
-function RegisterService($http) {
+function RegisterService($http, $location) {
   var service = this;
 
   //  Function to check for existing usernames in database
@@ -18,10 +18,15 @@ function RegisterService($http) {
   //  Function to register a user
   service.register = function(user) {
     console.log('Service function');
-    // return $http({
-    //   method: 'POST',
-    //   url:
-    // })
-  }
+    return $http({
+      method: 'POST',
+      url: '/register',
+      data: user
+    }).then(function() {
+      $location.path('/home');
+    }, function(error) {
+      console.log('Error registering:', error);
+    });
+  };
 
 }

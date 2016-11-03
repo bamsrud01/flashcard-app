@@ -50,7 +50,7 @@ function findById(id) {
 }
 
 //  Create a new user
-function create(username, password) {
+function create(username, password, email) {
   return new Promise(function(resolve, reject){
     bcrypt.hash(password, SALT_ROUNDS, function(err, hash){
       if (err) {
@@ -64,8 +64,8 @@ function create(username, password) {
           return reject(err);
         }
 
-        client.query('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *',
-                     [username, hash],
+        client.query('INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING *',
+                     [username, hash, email],
                      function(err, result){
                        done();
                        if (err) {

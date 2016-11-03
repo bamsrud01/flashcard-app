@@ -7,6 +7,7 @@
     <script src="vendors/angular-route.min.js"></script>
     <script src="scripts/app.module.js"></script>
     <script src="scripts/app.config.js"></script>
+    <script src="scripts/nav.service.js"></script>
     <script src="scripts/register.controller.js"></script>
     <script src="scripts/register.service.js"></script>
     <script src="scripts/home.controller.js"></script>
@@ -42,7 +43,7 @@
           </li>
         </ul>
         <!-- Show this form if the user is not logged in. -->
-        <form ng-hide="main.loggedIn" class="navbar-form navbar-right">
+        <form ng-hide="main.status.state.loggedIn" class="navbar-form navbar-right">
           <a href="/register"><button class="btn btn-success">Register</button></a>
           <div class="form-group">
             <label>Log In:</label>
@@ -52,7 +53,7 @@
           <button type="submit" class="btn btn-success">Log In</button>
         </form>
         <!-- Show this form if the user is logged in. -->
-        <form ng-show="main.loggedIn" class="navbar-form navbar-right">
+        <form ng-show="main.status.state.loggedIn" class="navbar-form navbar-right">
           <div class="form-group">
             <h4>Welcome, {{main.name}}!</h4>
           </div>
@@ -64,7 +65,7 @@
     <main class="container-fluid">
 
       <ng-view></ng-view>
-      
+
     </main>
   </body>
 </html>

@@ -3,6 +3,9 @@
 //  Declare file as a router
 const router = require('express').Router();
 
+//  Import user registration
+const User = require('../models/user');
+
 //  Import pool from connection.js
 const pool = require('../db/connection.js');
 
@@ -28,6 +31,17 @@ router.get('/check', function(req, res) {
     } finally {
       done();
     }
+  });
+});
+
+//  POST function to register a user
+router.post('/', function(req, res) {
+  console.log('Registering a new user');
+  User.create(req.body.username, req.body.password, req.body.email).then(function() {
+    res.sendStatus(201);
+  }).catch(function(err) {
+    console.log('Error in /register:', err);
+    res.sendStatus(500);
   });
 });
 

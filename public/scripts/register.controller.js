@@ -1,7 +1,7 @@
 angular.module('flashcardApp')
   .controller('RegisterController', RegisterController);
 
-function RegisterController(RegisterService) {
+function RegisterController(RegisterService, NavService) {
   var register = this;
 
   //  These values control the messages to the user when creating an account.
@@ -49,6 +49,7 @@ function RegisterController(RegisterService) {
       register.user.email = register.newEmail;
       register.user.password = register.newPassword;
       register.registerUser();
+      NavService.state.loggedIn = true;
       // MainController.changeLoggedState(true);
       // MainController.setUsername(register.newUsername);
     } else {

@@ -2,10 +2,10 @@ angular.module('flashcardApp', ['ngRoute'])
   .controller('MainController', MainController);
 
 //  This controller is a parent of the other controllers
-function MainController($http) {
+function MainController(NavService) {
   var main = this;
 
-  main.loggedIn = false;
+  main.status = NavService;
 
   main.changeLoggedState = function(state) {
     main.loggedIn = state;
