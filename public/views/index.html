@@ -8,6 +8,7 @@
     <script src="scripts/app.module.js"></script>
     <script src="scripts/app.config.js"></script>
     <script src="scripts/nav.service.js"></script>
+    <script src="scripts/main.service.js"></script>
     <script src="scripts/register.controller.js"></script>
     <script src="scripts/register.service.js"></script>
     <script src="scripts/home.controller.js"></script>
@@ -43,21 +44,21 @@
           </li>
         </ul>
         <!-- Show this form if the user is not logged in. -->
-        <form ng-hide="main.status.state.loggedIn" class="navbar-form navbar-right">
+        <form ng-hide="main.nav.state.loggedIn" class="navbar-form navbar-right">
           <a href="/register"><button class="btn btn-success">Register</button></a>
           <div class="form-group">
             <label>Log In:</label>
-            <input type="text" class="form-control" placeholder="Username">
-            <input type="text" class="form-control" placeholder="Password">
+            <input type="text" class="form-control" ng-model="main.login.username" placeholder="Username">
+            <input type="password" class="form-control" ng-model="main.login.password" placeholder="Password">
           </div>
-          <button type="submit" class="btn btn-success">Log In</button>
+          <button type="submit" ng-click="main.logInUser()" class="btn btn-success">Log In</button>
         </form>
         <!-- Show this form if the user is logged in. -->
-        <form ng-show="main.status.state.loggedIn" class="navbar-form navbar-right">
+        <form ng-show="main.nav.state.loggedIn" class="navbar-form navbar-right">
           <div class="form-group">
-            <h4>Welcome, {{main.name}}!</h4>
+            <h4>Welcome, {{main.nav.userData.username}}!</h4>
           </div>
-          <button class="btn btn-success">Log Out</button>
+          <button class="btn btn-success" ng-click="main.logOutUser()">Log Out</button>
         </form>
       </div>
     </nav>

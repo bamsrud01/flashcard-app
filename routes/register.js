@@ -1,10 +1,13 @@
-//  This router will handle username registration.
+//  This router will handle username registration, as well as user login.
 
 //  Declare file as a router
 const router = require('express').Router();
 
 //  Import user registration
 const User = require('../models/user');
+
+//  Import passport
+const passport = require('passport');
 
 //  Import pool from connection.js
 const pool = require('../db/connection.js');
@@ -43,6 +46,18 @@ router.post('/', function(req, res) {
     console.log('Error in /register:', err);
     res.sendStatus(500);
   });
+});
+
+//  POST function for user login
+router.post('/login', passport.authenticate('local'), function(req, res) {
+  console.log('Loggin in a user');
+  res.sendStatus(200);
+});
+
+router.post('/logout', function(req, res) {
+  req.logout();
+  console.log('Loggin in a user');
+  res.sendStatus(200);
 });
 
 module.exports = router;

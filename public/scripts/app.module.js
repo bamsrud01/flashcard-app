@@ -2,20 +2,30 @@ angular.module('flashcardApp', ['ngRoute'])
   .controller('MainController', MainController);
 
 //  This controller is a parent of the other controllers
-function MainController(NavService) {
+function MainController(NavService, MainService) {
   var main = this;
 
-  main.status = NavService;
+  main.nav = NavService;
 
-  main.changeLoggedState = function(state) {
-    main.loggedIn = state;
+  main.login = {}
+
+  main.logInUser = function() {
+    MainService.logInUser(main.login.username, main.login.password).then(function() {
+      main.nav.userData.username = main.login.username;
+      main.nav.state.loggedIn = true;
+      main.login = {};
+    }).catch(function(error) {
+      main.nav.state.loggedIn = false;
+    });
   }
 
-  main.setUsername = function(username) {
-    main.name = username;
-  }
-
-  main.sendUsername = function(username) {
-    return main.name;
+  main.logOutUser = function() {
+    MainService.logOutUser().then(function() {
+      main.nav.userData.username = '';
+      main.nav.state.loggedIn = false;
+      console.log('Logout successful');
+    }).catch(function(error) {
+      console.log('Logout unsuccessful:', error);
+    });
   }
 }

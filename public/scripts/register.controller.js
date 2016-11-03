@@ -50,8 +50,7 @@ function RegisterController(RegisterService, NavService) {
       register.user.password = register.newPassword;
       register.registerUser();
       NavService.state.loggedIn = true;
-      // MainController.changeLoggedState(true);
-      // MainController.setUsername(register.newUsername);
+      NavService.userData.username = register.newUsername;
     } else {
       console.log('Requirements have NOT been met.');
     }
