@@ -7,10 +7,28 @@ function HomeService($http) {
   //  GET all card sets
   service.getCardSets = function() {
     return $http.get('/flashcards/all-sets').then(function(response) {
-      console.log('Service response:', response.data);
       return response.data;
     });
   }
+
+  //  GET card sets by rating
+  service.getSetsByRating = function() {
+    return $http.get('/flashcards/rating').then(function(response) {
+      return response.data;
+    });
+  }
+
+  //  GET card sets by Favorite
+  service.getSetsByFavorite = function(sentUsername) {
+    return $http.get('/flashcards/favorite', {
+      params: {
+        username: sentUsername
+      }
+    }).then(function(response) {
+      return response.data;
+    });
+  }
+
 
   //  GET card sets by category
   service.getSetsByCategory = function(categoryToFind) {
@@ -20,9 +38,19 @@ function HomeService($http) {
         category: categoryToFind
       }
     }).then(function(response) {
-      console.log('Category response:', response.data);
       return response.data;
     });
+  }
+
+  //  Show set comments
+  service.showComments = function(setId) {
+    return $http.get('/comment/set', {
+      params: {
+        id: setId
+      }
+    }).then(function(response) {
+      return response.data;
+    })
   }
 
 }

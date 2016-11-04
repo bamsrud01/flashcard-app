@@ -13,7 +13,7 @@ CREATE TABLE sets (
   id SERIAL PRIMARY KEY,
   username varchar(40) NOT NULL,
   set_name varchar(120) NOT NULL,
-  avg-rating INT
+  avg-rating FLOAT
 );
 
 --  This table will hold comments on entire card sets, as well as rating.

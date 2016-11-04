@@ -13,17 +13,43 @@ function HomeController(HomeService, NavService) {
 
   home.getCardSets = function() {
     HomeService.getCardSets().then(function(sets) {
-      console.log(sets);
-      //  Returns array of objects {category, id, set_name, username}
+      console.log('Getting card sets:', sets);
+      //  Returns array of objects {avg-rating, category, id, set_name, username}
+      home.sets = sets;
+    });
+  }
+
+  home.getSetsByRating = function() {
+    HomeService.getSetsByRating().then(function(sets) {
+      console.log('Getting card sets by rating:', sets);
+      //  Returns array of objects {avg-rating, category, id, set_name, username}
+      home.sets = sets;
+    });
+  }
+
+  home.getSetsByFavorite = function() {
+    HomeService.getSetsByFavorite(home.username).then(function(sets) {
+      console.log('Favorited sets:', sets);
+      //  MUST TEST THIS
+      home.sets = sets;
     });
   }
 
   home.getSetsByCategory = function(category) {
-    console.log('button clicked');
     HomeService.getSetsByCategory(category).then(function(sets) {
       console.log('Category results:', sets);
-
+      //  Returns array of objects {avg-rating, category, id, set_name, username}
+      home.sets = sets;
     });
+  }
+
+  home.showComments = function(setId) {
+    home.currentSelected = setId
+    HomeService.showComments(setId).then(function(comments) {
+      console.log('Returned comments:', comments);
+      //  Returns array of objects {comment, id, rating, set_id, username}
+      home.setComments = comments;
+    })
   }
 
   home.displayHome();

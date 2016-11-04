@@ -5,18 +5,30 @@
 <div class="row">
   <aside class="col-md-2">
     <!-- Sidebar with categories -->
-    <button class="col-md-offset-2 col-md-8 btn btn-success">Top Rated</button>
-    <button class="col-md-offset-2 col-md-8 btn btn-success">Favorited</button>
+    <button class="col-md-offset-2 col-md-8 btn btn-success" ng-click="home.getSetsByRating()">Top Rated</button>
+    <button class="col-md-offset-2 col-md-8 btn btn-success" ng-click="home.getSetsByFavorite()">Favorited</button>
     <button class="col-md-offset-2 col-md-8 btn btn-primary" ng-repeat="category in home.categories" ng-click="home.getSetsByCategory(category)">{{category}}</button>
   </aside>
   <section class="col-md-8">
     <!-- Main section -->
-    <h2>Some Main Stuff</h2>
+    <div class="row">
+      <div class="col-md-6" ng-repeat="set in home.sets">
+        <p ng-click="home.showComments(set.id)">Set Name: {{set.set_name}}</p>
+        <p ng-show="set.avg-rating >= 1">Set Rating: {{set.avg-rating}}</p>
+        <!-- Large image here -->
+        <!-- Include {{set.category}} in here -->
+        <p>Created by: {{set.username}}</p>
+        <button ng-show="home.currentSelected == set.id" class="col-md-12 btn btn-lg btn-success">Practice this set!</button>
+      </div>
+    </div>
   </section>
   <aside class="col-md-2">
     <!-- Display for set comments -->
-    <p>
-      Some more stuff
-    </p>
+    <h3>Comments</h3>
+    <div ng-repeat="comment in home.setComments">
+      <h6>{{comment.rating}}</h6>
+      <h4>{{comment.comment}}</h4>
+      <h5>{{comment.username}}</h5>
+    </div>
   </aside>
 </div>
