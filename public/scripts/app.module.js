@@ -18,16 +18,17 @@ function MainController(NavService, MainService) {
       main.login = {};
     }).catch(function(error) {
       main.nav.state.loggedIn = false;
+    }).then(function(){
+      if (!main.nav.userData.username) {
+        main.loginFail = true;
+      }
     });
-    if (main.nav.userData.username == '') {
-      main.loginFail = true;
-    }
   }
 
   main.logOutUser = function() {
     main.loginFail = false;
     MainService.logOutUser().then(function() {
-      main.nav.userData.username = '';
+      main.nav.userData.username = false;
       main.nav.state.loggedIn = false;
       console.log('Logout successful');
     }).catch(function(error) {

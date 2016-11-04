@@ -55,7 +55,7 @@ router.get('/rating', function(req, res) {
   });
 });
 
-//  GET favorited card sets
+//  GET favorited card sets (Home)
 router.get('/favorite', function(req, res) {
   var username = req.query.username
   pool.connect(function(err, client, done) {
@@ -83,7 +83,7 @@ router.get('/favorite', function(req, res) {
   });
 });
 
-//GET all cards by chosen category
+//GET all cards by chosen category (Home)
 router.get('/category', function(req, res) {
   var category = req.query.category;
   console.log('Category:', category);
@@ -102,6 +102,114 @@ router.get('/category', function(req, res) {
         }
         console.log('Got rows from database(' + category + '):', result.rows);
         res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  GET all card sets (My Sets)
+router.get('/all-sets/mine', function(req, res) {
+  var username = req.query.username;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT * FROM sets WHERE username=$1', [username], function(err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Got rows from database:', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  GET all card sets by rating (My Sets)
+router.get('/rating/mine', function(req, res) {
+  var username = req.query.username;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT * FROM sets ORDER BY avg-rating ' +
+        'WHERE username=$1', [username], function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+        }
+        console.log('Got rows from database(rating):', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  GET favorited card sets (My Sets)
+router.get('/favorite/mine', function(req, res) {
+  var username = req.query.username
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT category, set_id, set_name, username ' +
+        'FROM sets JOIN user_data ON sets.id=user_data.set_id ' +
+        'WHERE username=$1 AND user_data.username=$1 AND favorited=TRUE',
+        [username], function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database(favorites):', result.rows);
+          res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//GET all cards by chosen category (My Sets)
+router.get('/category/mine', function(req, res) {
+  var username = req.query.username;
+  var category = req.query.category;
+  console.log('Category:', category);
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT * FROM sets ' +
+        'WHERE username=$1 AND category=$2',
+        [username, category], function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database(' + category + '):', result.rows);
+          res.send(result.rows);
       });
     } finally {
       done();

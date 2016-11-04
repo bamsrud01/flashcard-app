@@ -1,34 +1,35 @@
-<h1>Home</h1>
+<div class="gap"></div>
 <div class="row">
-  <h3 class="col-md-2">Categories</h3>
-</div>
-<div class="row">
-  <aside class="col-md-2">
+  <aside class="col-md-2 bg-info left-aside">
+    <h3 class="col-md-12 center-text">Categories</h3>
     <!-- Sidebar with categories -->
-    <button class="col-md-offset-2 col-md-8 btn btn-success" ng-click="home.getSetsByRating()">Top Rated</button>
-    <button class="col-md-offset-2 col-md-8 btn btn-success" ng-click="home.getSetsByFavorite()">Favorited</button>
-    <button class="col-md-offset-2 col-md-8 btn btn-primary" ng-repeat="category in home.categories" ng-click="home.getSetsByCategory(category)">{{category}}</button>
+    <button class="col-md-12 btn btn-success" ng-click="home.getSetsByRating()">Top Rated</button>
+    <button class="col-md-12 btn btn-success" ng-click="home.getSetsByFavorite()">Favorited</button>
+    <button class="col-md-12 btn btn-primary" ng-repeat="category in home.categories" ng-click="home.getSetsByCategory(category)">{{category}}</button>
   </aside>
   <section class="col-md-8">
     <!-- Main section -->
     <div class="row">
       <div class="col-md-6" ng-repeat="set in home.sets">
-        <p ng-click="home.showComments(set.id)">Set Name: {{set.set_name}}</p>
-        <p ng-show="set.avg-rating >= 1">Set Rating: {{set.avg-rating}}</p>
-        <!-- Large image here -->
-        <!-- Include {{set.category}} in here -->
-        <p>Created by: {{set.username}}</p>
-        <button ng-show="home.currentSelected == set.id" class="col-md-12 btn btn-lg btn-success">Practice this set!</button>
+        <div ng-click="home.showComments(set.id)" class="col-md-12 cardDisplay bg-success">
+          <h6 ng-show="set.avg-rating >= 1">Set Rating: {{set.avg-rating}}</p>
+          <h5>Created by: {{set.username}}</h5>
+          <h2>{{set.set_name}}</h2>
+          <h4>{{set.description}}</h4>
+          <h5>{{set.category}}</h5>
+          <p><a href="/review" ng-show="home.currentSelected == set.id" class="col-md-12 btn btn-lg btn-success">Practice this set!</a></p>
+        </div>
       </div>
     </div>
   </section>
-  <aside class="col-md-2">
+  <aside class="col-md-2 bg-info right-aside">
     <!-- Display for set comments -->
-    <h3>Comments</h3>
+    <h3 class="center-text">Comments</h3>
     <div ng-repeat="comment in home.setComments">
-      <h6>{{comment.rating}}</h6>
-      <h4>{{comment.comment}}</h4>
+      <h6 ng-show="comment.rating">{{comment.rating}}</h6>
+      <p>{{comment.comment}}</p>
       <h5>{{comment.username}}</h5>
+      <div class="col-md-12 bg-primary divide"></div>
     </div>
   </aside>
 </div>

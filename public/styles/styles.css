@@ -1,1 +1,43 @@
+h1, h2, h3, h4, h5, h6, p, label {
+  color: black;
+}
 
+.gap {
+  height: 60px;
+}
+
+.cardDisplay {
+  padding: 30px;
+  border-radius: 20px;
+  height: 250px;
+  color: black;
+}
+
+.center-text {
+  color: black;
+  text-align: center;
+}
+
+aside {
+  height: 800px;
+}
+
+.left-aside {
+  border-radius: 0 20px 20px 0;
+}
+
+.right-aside {
+  border-radius: 20px 0 0 20px;
+}
+
+.divide {
+  height: 5px;
+}
+
+nav button {
+  margin: 0 10px 0 10px;
+}
+
+aside button {
+  margin: 10px 0 10px 0;
+}
