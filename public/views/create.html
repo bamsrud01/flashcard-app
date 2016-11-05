@@ -7,6 +7,14 @@
   <div class="gap"></div>
   <div class="row">
     <aside class="col-md-2 bg-info left-aside">
+      <div class="row" ng-repeat="card in create.cards">
+        <div class="col-md-6 question-card">
+          <h5>Question {{$index + 1}}</h5>
+        </div>
+        <div class="col-md-6 answer-card">
+          <h5>Answer {{$index + 1}}</h5>
+        </div>
+      </div>
       <!-- Sidebar will show cards -->
     </aside>
     <section class="col-md-10">
@@ -27,7 +35,7 @@
             <label>Set Description:</label>
             <textarea class="form-control" rows="5" ng-model="create.newSet.description"></textarea>
           </div>
-          <h4>Category: {{create.newSet.category}}</h4>
+          <h4 class="col-md-12">Category: {{create.newSet.category}}</h4>
           <div class="form-group">
             <button class="btn btn-success btn-lg col-md-12" ng-click="create.createSet()">Create New Set</button>
           </div>
@@ -35,21 +43,37 @@
       </div>
       <div class="row" ng-hide="create.showNewSet">
         <div class="col-md-offset-1 col-md-7">
-          <div class="col-md-12 cardDisplay bg-success">
+          <div class="row cardDisplay bg-success">
+            <h2>{{create.newCard.question}}</h2>
+          </div>
+          <div class="row">
+            <h3 class="col-md-2">Question:</h3>
+            <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - create.newCard.question.length}}</h6>
+            <button class="col-md-3 btn btn-default">Upload Picture</button>
+            <textarea class="form-control" rows="2" ng-model="create.newCard.question"></textarea>
           </div>
         </div>
         <div class="col-md-offset-1 col-md-3">
           <h3 class="center-text">Comment</h3>
+          <textarea class="form-control" rows="10" ng-model="create.cardComment" ng-blur="create.comment = true"></textarea>
         </div>
       </div>
       <div class="gap"></div>
       <div class="row" ng-hide="create.showNewSet">
         <div class="col-md-offset-1 col-md-7">
-          <div class="col-md-12 cardDisplay answer">
+          <div class="row cardDisplay answer">
+            <h2>{{create.newCard.answer}}</h2>
           </div>
-        </div>
-        <div class="col-md-offset-1 col-md-3">
-          <h3 class="center-text">Comment</h3>
+          <div class="row">
+            <h3 class="col-md-2">Answer:</h3>
+            <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - create.newCard.answer.length}}</h6>
+            <button class="col-md-3 btn btn-default">Upload Picture</button>
+            <textarea class="form-control" rows="2" ng-model="create.newCard.answer"></textarea>
+          </div>
+          <div class="row">
+            <button class="btn btn-success btn-lg col-md-12 spaced-button" ng-click="create.addCard()">Add Next Card</button>
+            <button class="btn btn-success btn-lg col-md-12 spaced-button">Finish Set</button>
+          </div>
         </div>
       </div>
     </section>

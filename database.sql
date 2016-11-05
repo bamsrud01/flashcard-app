@@ -3,9 +3,9 @@ CREATE TABLE cards (
   id SERIAL PRIMARY KEY,
   set_id INT NOT NULL,
   question varchar(255) NOT NULL,
-  q-image varchar(255),
+  q_image varchar(255),
   answer varchar(255) NOT NULL,
-  a-image varchar(255),
+  a_image varchar(255)
 );
 
 --  This table will hold all users and the sets they have created.
@@ -15,7 +15,7 @@ CREATE TABLE sets (
   set_name varchar(120) NOT NULL,
   category varchar(40) NOT NULL,
   description varchar(150) NOT NULL,
-  avg-rating FLOAT
+  avg_rating FLOAT
 );
 
 --  This table will hold comments on entire card sets, as well as rating.

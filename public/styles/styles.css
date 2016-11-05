@@ -11,6 +11,7 @@ h1, h2, h3, h4, h5, h6, p, label, input {
   border-radius: 20px;
   height: 250px;
   color: black;
+  margin-bottom: 15px;
 }
 
 .center-text {
@@ -38,7 +39,7 @@ nav button {
   margin: 0 10px 0 10px;
 }
 
-aside button {
+.spaced-button {
   margin: 10px 0 10px 0;
 }
 
