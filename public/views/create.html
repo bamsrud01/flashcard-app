@@ -1,1 +1,57 @@
-<h1>Create</h1>
+<!-- <section ng-hide="create.username">
+  <h1>You must be logged in to create a set</h1>
+</section> -->
+
+<!-- ng-show="create.username" -->
+<section>
+  <div class="gap"></div>
+  <div class="row">
+    <aside class="col-md-2 bg-info left-aside">
+      <!-- Sidebar will show cards -->
+    </aside>
+    <section class="col-md-10">
+      <!-- Main section -->
+      <div class="row">
+        <ol class="col-md-offset-1 col-md-9 breadcrumb" ng-show="create.showNewSet">
+          <li><h4>Choose category:</h4></li>
+          <li ng-repeat="category in create.categories"><button class="btn btn-success" ng-click="create.newSet.category = category">{{category}}</button></li>
+        </ol>
+      </div>
+      <div class="row" ng-show="create.showNewSet">
+        <div class="set-info-area col-md-offset-1 col-md-8">
+          <div class="form-group">
+            <label>Set Name:</label>
+            <input class="form-control input-lg" type="text" ng-model="create.newSet.name"/>
+          </div>
+          <div class="form-group">
+            <label>Set Description:</label>
+            <textarea class="form-control" rows="5" ng-model="create.newSet.description"></textarea>
+          </div>
+          <h4>Category: {{create.newSet.category}}</h4>
+          <div class="form-group">
+            <button class="btn btn-success btn-lg col-md-12" ng-click="create.createSet()">Create New Set</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-hide="create.showNewSet">
+        <div class="col-md-offset-1 col-md-7">
+          <div class="col-md-12 cardDisplay bg-success">
+          </div>
+        </div>
+        <div class="col-md-offset-1 col-md-3">
+          <h3 class="center-text">Comment</h3>
+        </div>
+      </div>
+      <div class="gap"></div>
+      <div class="row" ng-hide="create.showNewSet">
+        <div class="col-md-offset-1 col-md-7">
+          <div class="col-md-12 cardDisplay answer">
+          </div>
+        </div>
+        <div class="col-md-offset-1 col-md-3">
+          <h3 class="center-text">Comment</h3>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

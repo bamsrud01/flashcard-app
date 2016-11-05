@@ -14,7 +14,7 @@ function HomeController(HomeService, NavService) {
   home.getCardSets = function() {
     HomeService.getCardSets().then(function(sets) {
       console.log('Getting card sets:', sets);
-      //  Returns array of objects {avg-rating, category, description, id, set_name, username}
+      //  Returns array of objects {avg_rating, category, description, id, set_name, username}
       home.sets = sets;
     });
   }
@@ -22,7 +22,7 @@ function HomeController(HomeService, NavService) {
   home.getSetsByRating = function() {
     HomeService.getSetsByRating().then(function(sets) {
       console.log('Getting card sets by rating:', sets);
-      //  Returns array of objects {avg-rating, category, description, id, set_name, username}
+      //  Returns array of objects {avg_rating, category, description, id, set_name, username}
       home.sets = sets;
     });
   }
@@ -38,7 +38,7 @@ function HomeController(HomeService, NavService) {
   home.getSetsByCategory = function(category) {
     HomeService.getSetsByCategory(category).then(function(sets) {
       console.log('Category results:', sets);
-      //  Returns array of objects {avg-rating, category, description, id, set_name, username}
+      //  Returns array of objects {avg_rating, category, description, id, set_name, username}
       home.sets = sets;
     });
   }

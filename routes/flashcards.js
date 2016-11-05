@@ -40,14 +40,15 @@ router.get('/rating', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('SELECT * FROM sets ORDER BY avg-rating', function(err, result) {
-        if (err) {
-          console.log('Error querying database:', err);
-          res.sendStatus(500);
-          return;
-        }
-        console.log('Got rows from database(rating):', result.rows);
-        res.send(result.rows);
+      client.query('SELECT * FROM sets ORDER BY avg-rating',
+        function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database(rating):', result.rows);
+          res.send(result.rows);
       });
     } finally {
       done();
@@ -94,14 +95,15 @@ router.get('/category', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('SELECT * FROM sets WHERE category=$1', [category], function(err, result) {
-        if (err) {
-          console.log('Error querying database:', err);
-          res.sendStatus(500);
-          return;
-        }
-        console.log('Got rows from database(' + category + '):', result.rows);
-        res.send(result.rows);
+      client.query('SELECT * FROM sets WHERE category=$1', [category],
+        function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database(' + category + '):', result.rows);
+          res.send(result.rows);
       });
     } finally {
       done();
@@ -119,14 +121,15 @@ router.get('/all-sets/mine', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('SELECT * FROM sets WHERE username=$1', [username], function(err, result) {
-        if (err) {
-          console.log('Error querying database:', err);
-          res.sendStatus(500);
-          return;
-        }
-        console.log('Got rows from database:', result.rows);
-        res.send(result.rows);
+      client.query('SELECT * FROM sets WHERE username=$1', [username],
+        function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database:', result.rows);
+          res.send(result.rows);
       });
     } finally {
       done();
@@ -188,7 +191,7 @@ router.get('/favorite/mine', function(req, res) {
   });
 });
 
-//GET all cards by chosen category (My Sets)
+//  GET all cards by chosen category (My Sets)
 router.get('/category/mine', function(req, res) {
   var username = req.query.username;
   var category = req.query.category;
@@ -209,6 +212,35 @@ router.get('/category/mine', function(req, res) {
             return;
           }
           console.log('Got rows from database(' + category + '):', result.rows);
+          res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  POST a new set
+router.post('/set', function(req, res) {
+  var setData = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('INSERT INTO sets' + 
+        ' (username, set_name, category, description)' +
+        ' VALUES ($1, $2, $3, $4) RETURNING *',
+        [setData.username, setData.name, setData.category, setData.description],
+        function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database:', result.rows);
           res.send(result.rows);
       });
     } finally {

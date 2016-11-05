@@ -1,4 +1,4 @@
-h1, h2, h3, h4, h5, h6, p, label {
+h1, h2, h3, h4, h5, h6, p, label, input {
   color: black;
 }
 
@@ -40,4 +40,15 @@ nav button {
 
 aside button {
   margin: 10px 0 10px 0;
+}
+
+.answer {
+  background-color: white;
+}
+
+.set-info-area {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
 }

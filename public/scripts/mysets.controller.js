@@ -13,7 +13,7 @@ function MySetsController(MySetsService, NavService) {
   mine.getCardSets = function() {
     MySetsService.getCardSets(mine.username).then(function(sets) {
       console.log('Getting card sets:', sets);
-      //  Returns array of objects {avg-rating, category, description, id, set_name, username}
+      //  Returns array of objects {avg_rating, category, description, id, set_name, username}
       mine.sets = sets;
     });
   }
@@ -21,7 +21,7 @@ function MySetsController(MySetsService, NavService) {
   mine.getSetsByRating = function() {
     MySetsService.getSetsByRating(mine.username).then(function(sets) {
       console.log('Getting card sets by rating:', sets);
-      //  Returns array of objects {avg-rating, category, description, id, set_name, username}
+      //  Returns array of objects {avg_rating, category, description, id, set_name, username}
       mine.sets = sets;
     });
   }
@@ -37,7 +37,7 @@ function MySetsController(MySetsService, NavService) {
   mine.getSetsByCategory = function(category) {
     MySetsService.getSetsByCategory(mine.username, category).then(function(sets) {
       console.log('Category results:', sets);
-      //  Returns array of objects {avg-rating, category, description, id, set_name, username}
+      //  Returns array of objects {avg_rating, category, description, id, set_name, username}
       mine.sets = sets;
     });
   }
