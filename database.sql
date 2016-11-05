@@ -3,8 +3,8 @@ CREATE TABLE cards (
   id SERIAL PRIMARY KEY,
   set_id INT NOT NULL,
   question varchar(255) NOT NULL,
-  q_image varchar(255),
   answer varchar(255) NOT NULL,
+  q_image varchar(255),
   a_image varchar(255)
 );
 

@@ -5,6 +5,7 @@ function MySetsController(MySetsService, NavService) {
   var mine = this;
 
   mine.username = NavService.userData.username;
+  mine.categories = NavService.categories;
 
   mine.displayMySets = function() {
     mine.getCardSets();
