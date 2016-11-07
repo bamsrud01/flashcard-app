@@ -1,23 +1,22 @@
 angular.module('flashcardApp')
   .service('CreateService', CreateService);
 
-function CreateService($http) {
+function CreateService($http, $location) {
   var service = this;
 
+  //  Creates a set
   service.createSet = function(setData) {
-    console.log('Set data received:', setData);
     return $http({
       method: 'POST',
       url: '/flashcards/set',
       data: setData
     }).then(function(response) {
-      console.log('Response:', response.data);
       return response.data;
     });
   };
 
+  //  Adds a card
   service.addCard = function(cardData) {
-    console.log('Card data recieved:', cardData);
     return $http({
       method: 'POST',
       url: '/flashcards/card',
@@ -27,9 +26,8 @@ function CreateService($http) {
     });
   }
 
+  //  Adds a comment, associated with a specific card
   service.addComment = function(cardId, comment, username) {
-    console.log('Comment received:', comment);
-    console.log('Card ID received:', cardId);
     return $http({
       method: 'POST',
       url: '/flashcards/comment',
@@ -43,6 +41,7 @@ function CreateService($http) {
     });
   }
 
+  //  Updates an existing card
   service.updateCard = function(cardData) {
     return $http({
       method: 'PUT',
@@ -53,6 +52,7 @@ function CreateService($http) {
     });
   }
 
+  //  Gets a comment by the card id and username
   service.getComment = function(cardData) {
     return $http.get('/flashcards/comment', {
       params: {
@@ -60,11 +60,11 @@ function CreateService($http) {
         username: cardData.username
       }
     }).then(function(response) {
-      console.log('Comment response:', response.data);
       return response.data;
     });
   }
 
+  //  Updates a comment, takes the comment id
   service.updateComment = function(comment, id) {
     var commentData = {
       comment: comment,
@@ -77,5 +77,9 @@ function CreateService($http) {
     }).then(function(response) {
       return response.data;
     });
+  }
+
+  service.completeSet = function() {
+    $location.path('/cards');
   }
 }

@@ -5,18 +5,20 @@ function NavService() {
 
   var service = this;
 
+  //  Marks whether a user is logged in
   service.state = {
     loggedIn: false
   }
 
+  //  Categories are taken from here
   service.categories = ['Language', 'Math', 'Science', 'History', 'Other'];
 
+  //  Shows the currently active set of flashcards
   service.set = {
     id: undefined
   }
 
-  //  This value will be reset every time a user logs in, allowing the
-  //  username to be accessible on every page
+  //  This value is set on login allowing the username to be used on every page.
   service.userData = {
     username: false
   }
