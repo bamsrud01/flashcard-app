@@ -30,7 +30,7 @@ function CreateService($http, $location) {
   service.addComment = function(cardId, comment, username) {
     return $http({
       method: 'POST',
-      url: '/flashcards/comment',
+      url: '/comment/card',
       data: {
         username: username,
         cardId: cardId,
@@ -54,7 +54,7 @@ function CreateService($http, $location) {
 
   //  Gets a comment by the card id and username
   service.getComment = function(cardData) {
-    return $http.get('/flashcards/comment', {
+    return $http.get('/comment/card', {
       params: {
         id: cardData.id,
         username: cardData.username
@@ -72,7 +72,7 @@ function CreateService($http, $location) {
     }
     return $http({
       method: 'PUT',
-      url: '/flashcards/comment',
+      url: '/comment/card',
       data: commentData
     }).then(function(response) {
       return response.data;

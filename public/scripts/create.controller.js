@@ -80,19 +80,22 @@ function CreateController(CreateService, NavService) {
         CreateService.updateComment(create.cardComment, create.commentId);
         create.comment = false;
       }
+      create.activeCard = {
+        queImage: 'none',
+        ansImage: 'none'
+      };
     });
   }
-}
 
-//  Marks the completion of a set.
-create.completeSet = function() {
-  NavService.set.id = create.newSet.id;
-  create.cards = [];
-  create.newSet = {};
-  create.activeCard = {
-    queImage: 'none',
-    ansImage: 'none'
-  };
-  CreateService.completeSet();
-
+  //  Marks the completion of a set.
+  create.completeSet = function() {
+    NavService.set.id = create.currentId;
+    create.cards = [];
+    create.newSet = {};
+    create.activeCard = {
+      queImage: 'none',
+      ansImage: 'none'
+    };
+    CreateService.completeSet();
+  }
 }
