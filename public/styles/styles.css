@@ -53,3 +53,10 @@ nav button {
   margin-bottom: 15px;
   padding: 15px;
 }
+
+.side-card {
+  height: 75px;
+  border: 2px solid black;
+  margin-top: 15px;
+  
+}

@@ -8,10 +8,10 @@
   <div class="row">
     <aside class="col-md-2 bg-info left-aside">
       <div class="row" ng-repeat="card in create.cards">
-        <div class="col-md-6 question-card">
+        <div class="col-md-6 side-card bg-success" ng-click="create.editCard(card, $index)">
           <h5>Question {{$index + 1}}</h5>
         </div>
-        <div class="col-md-6 answer-card">
+        <div class="col-md-6 side-card answer" ng-click="create.editCard(card, $index)">
           <h5>Answer {{$index + 1}}</h5>
         </div>
       </div>
@@ -44,13 +44,13 @@
       <div class="row" ng-hide="create.showNewSet">
         <div class="col-md-offset-1 col-md-7">
           <div class="row cardDisplay bg-success">
-            <h2>{{create.newCard.question}}</h2>
+            <h2>{{create.activeCard.question}}</h2>
           </div>
           <div class="row">
             <h3 class="col-md-2">Question:</h3>
-            <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - create.newCard.question.length}}</h6>
+            <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - create.activeCard.question.length}}</h6>
             <button class="col-md-3 btn btn-default">Upload Picture</button>
-            <textarea class="form-control" rows="2" ng-model="create.newCard.question"></textarea>
+            <textarea class="form-control" rows="2" ng-model="create.activeCard.question"></textarea>
           </div>
         </div>
         <div class="col-md-offset-1 col-md-3">
@@ -62,16 +62,17 @@
       <div class="row" ng-hide="create.showNewSet">
         <div class="col-md-offset-1 col-md-7">
           <div class="row cardDisplay answer">
-            <h2>{{create.newCard.answer}}</h2>
+            <h2>{{create.activeCard.answer}}</h2>
           </div>
           <div class="row">
             <h3 class="col-md-2">Answer:</h3>
-            <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - create.newCard.answer.length}}</h6>
+            <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - create.activeCard.answer.length}}</h6>
             <button class="col-md-3 btn btn-default">Upload Picture</button>
-            <textarea class="form-control" rows="2" ng-model="create.newCard.answer"></textarea>
+            <textarea class="form-control" rows="2" ng-model="create.activeCard.answer"></textarea>
           </div>
           <div class="row">
-            <button class="btn btn-success btn-lg col-md-12 spaced-button" ng-click="create.addCard()">Add Next Card</button>
+            <button class="btn btn-warning btn-lg col-md-12 spaced-button" ng-click="create.updateCard()" ng-show="create.edit">Update Card</button>
+            <button class="btn btn-success btn-lg col-md-12 spaced-button" ng-click="create.addCard()" ng-hide="create.edit">Add Next Card</button>
             <button class="btn btn-success btn-lg col-md-12 spaced-button">Finish Set</button>
           </div>
         </div>

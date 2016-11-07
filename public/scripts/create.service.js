@@ -42,4 +42,40 @@ function CreateService($http) {
       return response.data;
     });
   }
+
+  service.updateCard = function(cardData) {
+    return $http({
+      method: 'PUT',
+      url: '/flashcards/card',
+      data: cardData
+    }).then(function(response) {
+      return response.data;
+    });
+  }
+
+  service.getComment = function(cardData) {
+    return $http.get('/flashcards/comment', {
+      params: {
+        id: cardData.id,
+        username: cardData.username
+      }
+    }).then(function(response) {
+      console.log('Comment response:', response.data);
+      return response.data;
+    });
+  }
+
+  service.updateComment = function(comment, id) {
+    var commentData = {
+      comment: comment,
+      id: id
+    }
+    return $http({
+      method: 'PUT',
+      url: '/flashcards/comment',
+      data: commentData
+    }).then(function(response) {
+      return response.data;
+    });
+  }
 }
