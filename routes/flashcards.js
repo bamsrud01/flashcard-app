@@ -278,7 +278,65 @@ router.post('/card', function(req, res) {
   });
 });
 
+//  PUT to edit an existing card
+router.put('/card', function(req, res) {
+  var card = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('INSERT INTO cards' +
+        ' (set_id, question, answer, q_image, a_image)' +
+        ' VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [card.Id, card.question, card.answer, card.queImage, card.ansImage],
+        function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database:', result.rows);
+          res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
 //  POST a comment
+router.post('/comment', function(req, res) {
+  var comment = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('INSERT INTO card_comments' +
+        ' (username, card_id, comment)' +
+        ' VALUES ($1, $2, $3) RETURNING *',
+        [comment.username, comment.cardId, comment.comment],
+        function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database:', result.rows);
+          res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  PUT to edit an existing comment
 router.post('/comment', function(req, res) {
   var comment = req.body;
   pool.connect(function(err, client, done) {
