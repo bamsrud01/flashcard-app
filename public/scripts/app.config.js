@@ -20,6 +20,9 @@ angular.module('flashcardApp')
       //  Review - Users can practice flashcard sets, and get their results
       templateUrl: 'views/review.html',
       controller: 'ReviewController as review'
+    }).when('/cards', {
+      templateUrl: 'views/cards.html',
+      controller: 'CardsController as cards'
     }).when('/calendar', {
       //  Calendar - Users can see dates to review flashcards
       templateUrl: 'views/calendar.html',

@@ -16,7 +16,7 @@ router.get('/all-sets', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('SELECT * FROM sets', function(err, result) {
+      client.query('SELECT * FROM sets;', function(err, result) {
         if (err) {
           console.log('Error querying database:', err);
           res.sendStatus(500);
@@ -40,7 +40,7 @@ router.get('/rating', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('SELECT * FROM sets ORDER BY avg-rating',
+      client.query('SELECT * FROM sets ORDER BY avg-rating;',
         function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
@@ -68,7 +68,7 @@ router.get('/favorite', function(req, res) {
       }
       client.query('SELECT category, set_id, set_name, username ' +
         'FROM sets JOIN user_data ON sets.id=user_data.set_id ' +
-        'WHERE user_data.username=$1 AND favorited=TRUE',
+        'WHERE user_data.username=$1 AND favorited=TRUE;',
         [username], function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
@@ -95,7 +95,7 @@ router.get('/category', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('SELECT * FROM sets WHERE category=$1', [category],
+      client.query('SELECT * FROM sets WHERE category=$1;', [category],
         function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
@@ -121,7 +121,7 @@ router.get('/all-sets/mine', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('SELECT * FROM sets WHERE username=$1', [username],
+      client.query('SELECT * FROM sets WHERE username=$1;', [username],
         function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
@@ -148,7 +148,7 @@ router.get('/rating/mine', function(req, res) {
         return;
       }
       client.query('SELECT * FROM sets ORDER BY avg-rating ' +
-        'WHERE username=$1', [username], function(err, result) {
+        'WHERE username=$1;', [username], function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
             res.sendStatus(500);
@@ -175,7 +175,7 @@ router.get('/favorite/mine', function(req, res) {
       }
       client.query('SELECT category, set_id, set_name, username ' +
         'FROM sets JOIN user_data ON sets.id=user_data.set_id ' +
-        'WHERE username=$1 AND user_data.username=$1 AND favorited=TRUE',
+        'WHERE username=$1 AND user_data.username=$1 AND favorited=TRUE;',
         [username], function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
@@ -204,7 +204,7 @@ router.get('/category/mine', function(req, res) {
         return;
       }
       client.query('SELECT * FROM sets ' +
-        'WHERE username=$1 AND category=$2',
+        'WHERE username=$1 AND category=$2;',
         [username, category], function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
@@ -232,7 +232,7 @@ router.post('/set', function(req, res) {
       }
       client.query('INSERT INTO sets' +
         ' (username, set_name, category, description)' +
-        ' VALUES ($1, $2, $3, $4) RETURNING *',
+        ' VALUES ($1, $2, $3, $4) RETURNING *;',
         [setData.username, setData.name, setData.category, setData.description],
         function(err, result) {
           if (err) {
@@ -261,7 +261,7 @@ router.post('/card', function(req, res) {
       }
       client.query('INSERT INTO cards' +
         ' (set_id, question, answer, q_image, a_image)' +
-        ' VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        ' VALUES ($1, $2, $3, $4, $5) RETURNING *;',
         [card.Id, card.question, card.answer, card.queImage, card.ansImage],
         function(err, result) {
           if (err) {
@@ -288,10 +288,9 @@ router.put('/card', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('INSERT INTO cards' +
-        ' (set_id, question, answer, q_image, a_image)' +
-        ' VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        [card.Id, card.question, card.answer, card.queImage, card.ansImage],
+      client.query('UPDATE cards SET question=$1, answer=$2, ' +
+        'q_image=$3, a_image=$4 WHERE id=$5 RETURNING *;',
+        [card.question, card.answer, card.q_image, card.a_image, card.id],
         function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
@@ -319,7 +318,7 @@ router.post('/comment', function(req, res) {
       }
       client.query('INSERT INTO card_comments' +
         ' (username, card_id, comment)' +
-        ' VALUES ($1, $2, $3) RETURNING *',
+        ' VALUES ($1, $2, $3) RETURNING *;',
         [comment.username, comment.cardId, comment.comment],
         function(err, result) {
           if (err) {
@@ -346,10 +345,9 @@ router.post('/comment', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('INSERT INTO card_comments' +
-        ' (username, card_id, comment)' +
-        ' VALUES ($1, $2, $3) RETURNING *',
-        [comment.username, comment.cardId, comment.comment],
+      client.query('UPDATE card_comments SET ' +
+        'comment=$1 WHERE id=$2 RETURNING *;',
+        [comment.comment, comment.id],
         function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
