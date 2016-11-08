@@ -8,6 +8,9 @@ function CardsController(CardsService, NavService) {
   cards.username = NavService.userData.username;
   cards.set = NavService.set;
 
+  //  This array will hold all comments on a specific card
+  cards.allComments = [];
+
   //  This value will change according to what kind of service is being used.
   cards.methodType = '';
 
@@ -28,6 +31,10 @@ function CardsController(CardsService, NavService) {
 
   //  Activate card information on click
   cards.viewCard = function(card) {
+    cards.cardInfo = {
+      cardId: card.id,
+      username: cards.username
+    }
     cards.commentCheck(card);
     cards.showComments(card);
   }
@@ -36,19 +43,34 @@ function CardsController(CardsService, NavService) {
   cards.commentCheck = function(cardData) {
     CardsService.getMyComments(cardData.id, cards.username).then(function(response) {
       if (response.length < 1) {
-        //  User has not commented
+        //  User has not commented, AJAX method set to POST
+        cards.methodType = 'POST';
       } else {
-        //  User has commented
-        cards.cardComment = response[0];
+        //  User has commented, AJAX method set to PUT
+        cards.cardComment = response[0].comment;
+        cards.methodType = 'PUT';
+        cards.cardInfo.id = response[0].id;
       }
     });
   }
 
+  //  Submit comment on card
+  cards.submitCardComment = function() {
+    console.log('Method type:', cards.methodType);
+    console.log('Sent data:', cards.cardInfo);
+    cards.cardInfo.comment = cards.cardComment;
+    CardsService.submitCardComment(cards.cardInfo, cards.methodType).then(function(response) {
+      cards.showComments(cards.cardInfo)
+    })
+  }
+
   //  Function to show all comments for this card_id
   cards.showComments = function(cardData) {
-    CardsService.showComments(cardData.id).then(function(response) {
+    CardsService.showComments(cards.cardInfo.cardId).then(function(response) {
       //  response should be an array of card comment objects {id, username, card_id, comment}
-    })
+      cards.allComments = response;
+      console.log('Response:', response);
+    });
   }
   //  Call the function to get cards
   cards.getCards();

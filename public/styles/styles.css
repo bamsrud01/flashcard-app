@@ -1,4 +1,4 @@
-h1, h2, h3, h4, h5, h6, p, label, input {
+h1, h2, h3, h4, h5, h6, p, label, input, textarea {
   color: black;
 }
 
@@ -58,5 +58,5 @@ nav button {
   height: 75px;
   border: 2px solid black;
   margin-top: 15px;
-  
+
 }

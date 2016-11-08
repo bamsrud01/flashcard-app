@@ -35,7 +35,17 @@ function CardsService($http, $location) {
       }
     }).then(function(response) {
       return response.data;
-    })
+    });
   }
 
+  //  Submit a comment, either through a POST or PUT request
+  service.submitCardComment = function(cardData, methodType) {
+    return $http({
+      method: methodType,
+      url: '/comment/card',
+      data: cardData
+    }).then(function(response) {
+      return response.data;
+    });
+  }
 }

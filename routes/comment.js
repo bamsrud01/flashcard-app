@@ -60,7 +60,7 @@ router.get('/card', function(req, res) {
 });
 
 //  Get all comments on card
-router.get('/card', function(req, res) {
+router.get('/card-all', function(req, res) {
   var cardId = req.query.id;
   pool.connect(function(err, client, done) {
     try {
@@ -69,7 +69,8 @@ router.get('/card', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('SELECT * FROM card_comments WHERE card_id=$1;', [cardId],
+      client.query('SELECT * FROM card_comments WHERE card_id=$1 ORDER BY id;',
+        [cardId],
         function(err, result) {
           if (err) {
             console.log('Error querying database:', err);

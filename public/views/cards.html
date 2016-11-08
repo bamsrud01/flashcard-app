@@ -1,0 +1,30 @@
+<div class="gap"></div>
+<div class="row">
+  <aside class="col-md-2 bg-info left-aside">
+    <h3 class="col-md-12 center-text">Set Details</h3>
+    <!-- Sidebar -->
+  </aside>
+  <section class="col-md-8">
+    <!-- Main section -->
+    <div class="row">
+      <!--  -->
+      <div ng-repeat="card in cards.cardArray">
+        <h1 ng-click="cards.viewCard(card)">{{card.id}}</h1>
+      </div>
+      <!--  -->
+    </div>
+  </section>
+  <aside class="col-md-2 bg-info right-aside">
+    <h3 class="col-md-12 center-text">Comments</h3>
+    <div class="row" ng-hide="cards.username == false">
+      <h4 class="center-text">Write a comment:</h4>
+      <textarea class="col-md-offset-1 col-md-10" rows="6" ng-model="cards.cardComment"></textarea>
+      <button class="col-md-offset-1 col-md-10 btn btn-success" ng-click="cards.submitCardComment()">Submit Comment</button>
+    </div>
+    <div class="row" ng-repeat="comment in cards.allComments">
+      <p>{{comment.comment}}</p>
+      <h5>{{comment.username}}</h5>
+    </div>
+    <!-- Display for card comments -->
+  </aside>
+</div>
