@@ -8,11 +8,13 @@ function CardsController(CardsService, NavService) {
   cards.username = NavService.userData.username;
   cards.set = NavService.set;
 
-  //  This array will hold all comments on a specific card
+  //  This array will hold all comments on a specific card and the set
   cards.allComments = [];
+  cards.allSetComments = [];
 
-  //  This value will change according to what kind of service is being used.
+  //  These valuee will change according to what kind of service is being used.
   cards.methodType = '';
+  cards.setMethodType = '';
 
   //  Get all card information belonging to the currently active set
   cards.getCards = function() {
@@ -27,6 +29,8 @@ function CardsController(CardsService, NavService) {
         cards.canEdit = false;
       }
     });
+    cards.setCommentCheck();
+    cards.showSetComments(cards.set);
   };
 
   //  Activate card information on click
@@ -61,7 +65,7 @@ function CardsController(CardsService, NavService) {
     cards.cardInfo.comment = cards.cardComment;
     CardsService.submitCardComment(cards.cardInfo, cards.methodType).then(function(response) {
       cards.showComments(cards.cardInfo)
-    })
+    });
   }
 
   //  Function to show all comments for this card_id
@@ -72,6 +76,41 @@ function CardsController(CardsService, NavService) {
       console.log('Response:', response);
     });
   }
+
+  //  Checks to see if the user has already commented on a set, redirects appropriately
+  cards.setCommentCheck = function() {
+    CardsService.getMySetComments(cards.set.id, cards.username).then(function(response) {
+      cards.setCommentInfo = {
+        setId: cards.set.id,
+        username: cards.username
+      };
+      if (response.length < 1) {
+        cards.setMethodType = 'POST';
+      } else {
+        cards.setComment = response[0].comment;
+        cards.setMethodType = 'PUT';
+        cards.setCommentInfo.commentId: response[0].id;
+      }
+
+    });
+  }
+
+  //  Submits a comment on a set
+  cards.submitSetComment = function() {
+    cards.setCommentInfo.comment = cards.setComment;
+    cards.setCommentInfo.rating = cards.setRating;
+    CardsService.submitSetComment(cards.setCommentInfo, cards.setMethodType).then(function(response) {
+      cards.showSetComments(cards.set);
+    });
+  }
+
+  //  Shows all comments on a set
+  cards.showSetComments = function(set) {
+    CardsService.showSetComments(set.id).then(function(reponse) {
+      cards.allSetComments = response;
+    })
+  }
+
   //  Call the function to get cards
   cards.getCards();
 

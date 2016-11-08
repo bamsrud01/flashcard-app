@@ -48,4 +48,38 @@ function CardsService($http, $location) {
       return response.data;
     });
   }
+
+  //  Search for set comments by active username
+  service.getMySetComments(setId, username) {
+    return $http.get('/comment/set-mine', {
+      params: {
+        id: setId,
+        username: username
+      }
+    }).then(function(response) {
+      return response.data;
+    });
+  }
+
+  //  Submit a set comment, either through a POST or PUT request
+  service.submitSetComment = function(setData, methodType) {
+    return $http({
+      method: methodType,
+      url: '/comment/set',
+      data: setData
+    }).then(function(response) {
+      return response.data;
+    });
+  }
+
+  //  Show all comments for a set
+  service.showSetComments = function(setId) {
+    return $http.get('/comment/set', {
+      params: {
+        id: setId
+      }
+    }).then(function(response) {
+      return response.data;
+    });
+  }
 }

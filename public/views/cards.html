@@ -1,8 +1,20 @@
 <div class="gap"></div>
 <div class="row">
   <aside class="col-md-2 bg-info left-aside">
-    <h3 class="col-md-12 center-text">Set Details</h3>
     <!-- Sidebar -->
+
+    <div class="row">
+      <h3 class="col-md-12 center-text">Set Details</h3>
+      <h3>{{cards.set.set_name}}</h3>
+      <h6 ng-show="cards.set.avg_rating >= 1">Set Rating: {{cards.set.avg_rating}}</h6>
+      <h5>By: {{cards.set.username}}</h5>
+      <p>{{cards.set.description}}</p>
+      <h5>Category: {{cards.set.category}}</h5>
+    </div>
+    <div class="col-md-12 bg-primary divide"></div>
+    <div class="row">
+      <h3 class="col-md-12 center-text">Set Comments</h3>
+    </div>
   </aside>
   <section class="col-md-8">
     <!-- Main section -->
@@ -24,6 +36,7 @@
     <div class="row" ng-repeat="comment in cards.allComments">
       <p>{{comment.comment}}</p>
       <h5>{{comment.username}}</h5>
+      <div class="col-md-12 bg-primary divide"></div>
     </div>
     <!-- Display for card comments -->
   </aside>
