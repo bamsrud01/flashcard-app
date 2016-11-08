@@ -89,7 +89,7 @@ function CardsController(CardsService, NavService) {
       } else {
         cards.setComment = response[0].comment;
         cards.setMethodType = 'PUT';
-        cards.setCommentInfo.commentId: response[0].id;
+        cards.setCommentInfo.commentId = response[0].id;
       }
 
     });
@@ -106,7 +106,7 @@ function CardsController(CardsService, NavService) {
 
   //  Shows all comments on a set
   cards.showSetComments = function(set) {
-    CardsService.showSetComments(set.id).then(function(reponse) {
+    CardsService.showSetComments(set.id).then(function(response) {
       cards.allSetComments = response;
     })
   }

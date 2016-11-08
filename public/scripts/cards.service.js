@@ -50,7 +50,7 @@ function CardsService($http, $location) {
   }
 
   //  Search for set comments by active username
-  service.getMySetComments(setId, username) {
+  service.getMySetComments = function(setId, username) {
     return $http.get('/comment/set-mine', {
       params: {
         id: setId,
