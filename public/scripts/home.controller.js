@@ -53,5 +53,10 @@ function HomeController(HomeService, NavService) {
     })
   }
 
+  home.viewCards = function(setData) {
+    NavService.set = setData;
+    HomeService.viewCards();
+  }
+
   home.displayHome();
 }

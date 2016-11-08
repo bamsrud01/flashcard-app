@@ -26,6 +26,7 @@ function CreateController(CreateService, NavService) {
     create.newSet.username = create.username;
     CreateService.createSet(create.newSet).then(function(response){
       //  Returns array of objects {avg_rating, category, description, id, set_name, username}
+      NavService.set = response[0];
       create.currentId = response[0].id;
       create.showNewSet = false;
     });
@@ -89,7 +90,6 @@ function CreateController(CreateService, NavService) {
 
   //  Marks the completion of a set.
   create.completeSet = function() {
-    NavService.set.id = create.currentId;
     create.cards = [];
     create.newSet = {};
     create.activeCard = {

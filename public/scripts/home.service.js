@@ -1,7 +1,7 @@
 angular.module('flashcardApp')
   .service('HomeService', HomeService);
 
-function HomeService($http) {
+function HomeService($http, $location) {
   var service = this;
 
   //  GET all card sets
@@ -50,7 +50,12 @@ function HomeService($http) {
       }
     }).then(function(response) {
       return response.data;
-    })
+    });
+  }
+
+  //  View cards
+  service.viewCards = function () {
+    $location.path('/cards');
   }
 
 }

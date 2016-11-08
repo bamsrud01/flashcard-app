@@ -87,7 +87,6 @@ router.get('/favorite', function(req, res) {
 //GET all card sets by chosen category (Home)
 router.get('/category', function(req, res) {
   var category = req.query.category;
-  console.log('Category:', category);
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -195,7 +194,6 @@ router.get('/favorite/mine', function(req, res) {
 router.get('/category/mine', function(req, res) {
   var username = req.query.username;
   var category = req.query.category;
-  console.log('Category:', category);
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -317,7 +315,7 @@ router.get('/card', function(req, res) {
         return;
       }
       client.query('SELECT * FROM cards ' +
-      'WHERE set_id=$1;',
+      'WHERE set_id=$1 ORDER BY id;',
       [setId], function(err, result) {
         if (err) {
           console.log('Error querying database:', err);

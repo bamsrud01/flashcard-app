@@ -6,9 +6,9 @@ const router = require('express').Router();
 //  Import pool from connection.js
 const pool = require('../db/connection.js');
 
+//  GET all set comments
 router.get('/set', function(req, res) {
   var id = req.query.id;
-  console.log('Set id:', id);
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -31,11 +31,10 @@ router.get('/set', function(req, res) {
   });
 });
 
-//  GET comment on existing card
+//  GET comment on existing card by username
 router.get('/card', function(req, res) {
   var cardId = req.query.id;
   var username = req.query.username;
-  console.log('Search parameters- cardID:', cardId, 'Username:', username);
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -53,6 +52,32 @@ router.get('/card', function(req, res) {
         }
         console.log('Got rows from database:', result.rows);
         res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  Get all comments on card
+router.get('/card', function(req, res) {
+  var cardId = req.query.id;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT * FROM card_comments WHERE card_id=$1;', [cardId],
+        function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database:', result.rows);
+          res.send(result.rows);
       });
     } finally {
       done();
@@ -92,7 +117,6 @@ router.post('/card', function(req, res) {
 //  PUT to edit an existing comment
 router.put('/card', function(req, res) {
   var comment = req.body;
-  console.log('Comment:', comment.comment, 'ID:', comment.id);
   pool.connect(function(err, client, done) {
     try {
       if (err) {

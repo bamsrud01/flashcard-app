@@ -18,7 +18,7 @@
           <h2>{{set.set_name}}</h2>
           <h4>{{set.description}}</h4>
           <h5>{{set.category}}</h5>
-          <p><a href="/review" ng-show="home.currentSelected == set.id" class="col-md-12 btn btn-lg btn-success">Practice this set!</a></p>
+          <p><a ng-show="home.currentSelected == set.id" class="col-md-12 btn btn-lg btn-success" ng-click="home.viewCards(set)">Practice this set!</a></p>
         </div>
       </div>
     </div>
