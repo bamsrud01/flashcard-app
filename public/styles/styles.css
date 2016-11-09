@@ -58,5 +58,8 @@ nav button {
   height: 75px;
   border: 2px solid black;
   margin-top: 15px;
+}
 
+.shown-cards {
+  padding: 15px;
 }

@@ -1,7 +1,7 @@
 angular.module('flashcardApp')
   .service('CardsService', CardsService);
 
-function CardsService($http, $location) {
+function CardsService($http) {
   var service = this;
 
   //  Get all cards by ID
@@ -63,6 +63,7 @@ function CardsService($http, $location) {
 
   //  Submit a set comment, either through a POST or PUT request
   service.submitSetComment = function(setData, methodType) {
+    console.log('Service recieved ' + methodType + 'request for:', setData);
     return $http({
       method: methodType,
       url: '/comment/set',
@@ -81,5 +82,9 @@ function CardsService($http, $location) {
     }).then(function(response) {
       return response.data;
     });
+  }
+
+  service.reviewCards = function() {
+
   }
 }

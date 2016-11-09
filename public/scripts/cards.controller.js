@@ -1,7 +1,7 @@
 angular.module('flashcardApp')
   .controller('CardsController', CardsController);
 
-function CardsController(CardsService, NavService) {
+function CardsController(CardsService, NavService, $location) {
   var cards = this;
 
   //  Information from NavService.  Included are the active username and set ID
@@ -99,6 +99,7 @@ function CardsController(CardsService, NavService) {
   cards.submitSetComment = function() {
     cards.setCommentInfo.comment = cards.setComment;
     cards.setCommentInfo.rating = cards.setRating;
+    console.log('comment submitted:', cards.setCommentInfo);
     CardsService.submitSetComment(cards.setCommentInfo, cards.setMethodType).then(function(response) {
       cards.showSetComments(cards.set);
     });
@@ -109,6 +110,10 @@ function CardsController(CardsService, NavService) {
     CardsService.showSetComments(set.id).then(function(response) {
       cards.allSetComments = response;
     })
+  }
+
+  cards.reviewCards = function() {
+    $location.path('/review');
   }
 
   //  Call the function to get cards

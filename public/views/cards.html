@@ -8,6 +8,7 @@
       <h5>By: {{cards.set.username}}</h5>
       <p>{{cards.set.description}}</p>
       <h5>Category: {{cards.set.category}}</h5>
+      <button class="col-md-offset-1 col-md-10 btn btn-success" ng-click="cards.reviewCards()">Review Set</button>
       <div class="col-md-12 bg-primary divide"></div>
     <div class="row">
       <h3 class="col-md-12 center-text">Set Comments</h3>
@@ -19,18 +20,40 @@
       </div>
       <div class="col-md-offset-1 col-md-10 bg-primary divide"></div>
       <div class="row" ng-repeat="comment in cards.allSetComments">
-        <h6>Rating: {{comment.rating}}/10</h6>
-        <p>{{comment.comment}}</p>
-        <h5>{{comment.username}}</h5>
+        <h6 ng-show="comment.rating >= 1" class="col-md-12">Rating: {{comment.rating}}/10</h6>
+        <p class="col-md-12">{{comment.comment}}</p>
+        <h5 class="col-md-12">{{comment.username}}</h5>
         <div class="col-md-offset-1 col-md-10 bg-primary divide"></div>
       </div>
   </aside>
   <section class="col-md-8">
+    <div class="row">
+      <div class="col-md-6" ng-repeat="set in home.sets">
+        <div ng-click="home.showComments(set.id)" class="col-md-12 cardDisplay bg-success">
+          <h6 ng-show="set.avg_rating >= 1">Set Rating: {{set.avg_rating}}</h6>
+          <h5>Created by: {{set.username}}</h5>
+          <h2>{{set.set_name}}</h2>
+          <h4>{{set.description}}</h4>
+          <h5>{{set.category}}</h5>
+          <p><a ng-show="home.currentSelected == set.id" class="col-md-12 btn btn-lg btn-success" ng-click="home.viewCards(set)">Practice this set!</a></p>
+        </div>
+      </div>
+    </div>
     <!-- Main section -->
     <div class="row">
-      <!--  -->
-      <div ng-repeat="card in cards.cardArray">
-        <h1 ng-click="cards.viewCard(card)">{{card.id}}</h1>
+      <div class="col-md-12" ng-repeat="card in cards.cardArray">
+          <div class="col-md-6" ng-click="cards.viewCard(card)">
+            <div class="col-md-12 cardDisplay bg-success">
+              <h3>{{card.question}}</h5>
+              <!-- If image, it goes here -->
+            </div>
+          </div>
+          <div class="col-md-6" ng-click="cards.viewCard(card)">
+            <div class="col-md-12 cardDisplay answer">
+              <h3>{{card.answer}}</h5>
+              <!-- If image, it goes here -->
+            </div>
+          </div>
       </div>
       <!--  -->
     </div>
@@ -44,8 +67,8 @@
     </div>
     <div class="col-md-12 bg-primary divide"></div>
     <div class="row" ng-repeat="comment in cards.allComments">
-      <p>{{comment.comment}}</p>
-      <h5>{{comment.username}}</h5>
+      <p class="col-md-12">{{comment.comment}}</p>
+      <h5 class="col-md-12">{{comment.username}}</h5>
       <div class="col-md-offset-1 col-md-10 bg-primary divide"></div>
     </div>
     <!-- Display for card comments -->

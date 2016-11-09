@@ -92,6 +92,7 @@ router.post('/set', function(req, res) {
 //  PUT to edit an existing set comment
 router.put('/set', function(req, res) {
   var comment = req.body;
+  console.log('PUT request for set comment:', req.body);
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -101,7 +102,7 @@ router.put('/set', function(req, res) {
       }
       client.query('UPDATE set_comments SET ' +
         'comment=$1, rating=$2 WHERE id=$3 RETURNING *;',
-        [comment.comment, comment.rating, comment.id],
+        [comment.comment, comment.rating, comment.setId],
         function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
