@@ -26,7 +26,7 @@ angular.module('flashcardApp')
     }).when('/calendar', {
       //  Calendar - Users can see dates to review flashcards
       templateUrl: 'views/calendar.html',
-      controller: 'CalendarController as calendar'
+      controller: 'CalendarController as vm'
     }).otherwise({
       //  Sets home to be the default page
       redirectTo:'/home'

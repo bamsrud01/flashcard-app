@@ -1,4 +1,4 @@
-angular.module('flashcardApp', ['ngRoute'])
+angular.module('flashcardApp', ['ngRoute', 'mwl.calendar', 'ui.bootstrap'])
   .controller('MainController', MainController);
 
 //  This controller is a parent of the other controllers

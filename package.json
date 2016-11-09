@@ -10,13 +10,16 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.8",
+    "angular-bootstrap-calendar": "^0.25.0",
     "angular-route": "^1.5.8",
+    "angular-ui-bootstrap": "^2.2.0",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
+    "moment": "^2.15.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pg": "^6.1.0"

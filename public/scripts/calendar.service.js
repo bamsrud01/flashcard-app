@@ -3,5 +3,5 @@ angular.module('flashcardApp')
 
 function CalendarService($http) {
   var service = this;
-  
+
 }
