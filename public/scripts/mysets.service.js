@@ -3,6 +3,7 @@ angular.module('flashcardApp')
 
 function MySetsService($http) {
   var service = this;
+  
   //  GET all card sets
   service.getCardSets = function(myUsername) {
     return $http.get('/flashcards/all-sets/mine', {

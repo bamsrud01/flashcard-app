@@ -43,10 +43,11 @@ function MySetsController(MySetsService, NavService) {
     });
   }
 
-  mine.showComments = function(setId) {
-    MySetsService.set.id = setId;
-    mine.currentSelected = setId
-    MySetsService.showComments(setId).then(function(comments) {
+  mine.showComments = function(set) {
+    // MySetsService.set.id = setId;
+    NavService.set = set;
+    mine.currentSelected = set.id;
+    MySetsService.showComments(set.id).then(function(comments) {
       console.log('Returned comments:', comments);
       //  Returns array of objects {comment, id, rating, set_id, username}
       mine.setComments = comments;
