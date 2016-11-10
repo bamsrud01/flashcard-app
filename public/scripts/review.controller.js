@@ -7,6 +7,13 @@ function ReviewController(ReviewService, NavService) {
   review.set = NavService.set;
   review.username = NavService.userData.username;
 
+  //  This object will hold data for the user_data table
+  review.reviewData = {
+    username: review.username,
+    setId: review.set.id
+  };
+  //  Needs: {username, set_id, date_used, correct, total, proficiency, review_date, favorited} receives {id}
+
 
   //  Sets starting values for the review process, and gets the cards
   review.setUp = function() {
@@ -16,7 +23,7 @@ function ReviewController(ReviewService, NavService) {
     review.cards = [];
     review.complete = false;
     review.question = true;
-    review.date = new Date().toDateString();  //  Wed Nov 09 2016
+    review.reviewData.dateUsed = new Date().toDateString();  //  Wed Nov 09 2016
     review.getCards();
   }
 
@@ -39,6 +46,8 @@ function ReviewController(ReviewService, NavService) {
     } else {
       review.complete = true;
       review.percentCorrect = (review.correct/review.total * 100).toFixed(2);
+      review.reviewData.correct = review.correct;
+      review.reviewData.total = review.total;
     }
     review.question = true;
   }

@@ -37,12 +37,14 @@ const register = require('./routes/register');
 const flashcards = require('./routes/flashcards');
 const comment = require('./routes/comment');
 const calendar = require('./routes/calendar');
+const data = require('./routes/data');
 
 //  Connect routes
 app.use('/register', register);
 app.use('/flashcards', flashcards);
 app.use('/comment', comment);
 app.use('/calendar', calendar);
+app.use('/data', data);
 
 //  Create port
 var port = process.env.PORT || 3000;

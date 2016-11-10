@@ -27,7 +27,8 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
         endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
         draggable: true,
         resizable: true,
-        actions: actions
+        actions: actions,
+        incrementsBadgeTotal: false
       }, {
         title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
         color: calendarConfig.colorTypes.info,
@@ -35,7 +36,8 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
         endsAt: moment().add(5, 'days').toDate(),
         draggable: true,
         resizable: true,
-        actions: actions
+        actions: actions,
+        incrementsBadgeTotal: false
       }, {
         title: 'This is a really long event title that occurs on every year',
         color: calendarConfig.colorTypes.important,
@@ -44,7 +46,8 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
         recursOn: 'year',
         draggable: true,
         resizable: true,
-        actions: actions
+        actions: actions,
+        incrementsBadgeTotal: false
       }
     ];
 
@@ -61,21 +64,21 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
       });
     };
 
-    vm.eventClicked = function(event) {
-      alert.show('Clicked', event);
-    };
-
-    vm.eventEdited = function(event) {
-      alert.show('Edited', event);
-    };
-
-    vm.eventDeleted = function(event) {
-      alert.show('Deleted', event);
-    };
-
-    vm.eventTimesChanged = function(event) {
-      alert.show('Dropped or resized', event);
-    };
+    // vm.eventClicked = function(event) {
+    //   alert.show('Clicked', event);
+    // };
+    //
+    // vm.eventEdited = function(event) {
+    //   alert.show('Edited', event);
+    // };
+    //
+    // vm.eventDeleted = function(event) {
+    //   alert.show('Deleted', event);
+    // };
+    //
+    // vm.eventTimesChanged = function(event) {
+    //   alert.show('Dropped or resized', event);
+    // };
 
     vm.toggle = function($event, field, event) {
       $event.preventDefault();
