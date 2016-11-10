@@ -1,2 +1,38 @@
-<h1>Review</h1>
-<h3>Set ID: {{review.set.id}}</h3>
+<div class="gap"></div>
+<div class="row">
+  <aside class="col-md-2 bg-info left-aside">
+
+  </aside>
+  <section class="col-md-8">
+    <!-- Main section -->
+    <div class="row" ng-hide="review.complete">
+      <div ng-show="review.question" class="col-md-offset-2 col-md-8 cardDisplay bg-success">
+        <h2>{{review.active.question}}</h2>
+        <!-- If image, image goes here -->
+      </div>
+      <button ng-show="review.question" class="col-md-offset-2 col-md-8 btn btn-success" ng-click="review.question = false">Check Answer</button>
+      <div ng-hide="review.question" class="col-md-offset-2 col-md-8 cardDisplay answer">
+        <h2>{{review.active.answer}}</h2>
+        <!-- If image, image goes here -->
+      </div>
+      <div ng-hide="review.question" class="col-md-offset-2 col-md-8">
+        <button class="col-md-5 btn btn-success" ng-click="review.correctAnswer()">Correct</button>
+        <button class="col-md-offset-2 col-md-5 btn btn-danger" ng-click="review.incorrectAnswer()">Incorrect</button>
+      </div>
+    </div>
+    <div class="row" ng-show="review.complete">
+      <div class="row">
+        <h2 class="col-md-offset-1 col-md-5">Correct: {{review.correct}}/{{review.total}}</h2>
+        <h2 class="col-md-offset-1 col-md-5">Last Review: {{review.userData.lastDate}}</h2>
+      </div>
+      <div class="gap"></div>
+      <div class="row">
+        <h2 class="col-md-offset-1 col-md-5">Incorrect: {{review.incorrect}}/{{review.total}}</h2>
+        <h2 class="col-md-offset-1 col-md-5">Percentage: {{review.percentCorrect}}%</h2>
+      </div>
+    </div>
+  </section>
+  <aside class="col-md-2 bg-info right-aside">
+    <h3 ng-show="review.username" class="center-text">Comment on this card:</h3>
+  </aside>
+</div>
