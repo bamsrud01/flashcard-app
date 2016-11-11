@@ -79,8 +79,8 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
       vm.studyEvents.forEach(function(event) {
         vm.events.push({
           title: 'Set reviewed: ' + event.set_name,
-          startsAt: moment(event.date_used).startOf('day').toDate().toDateString(),
-          endsAt: moment(event.date_used).startOf('day').add(23, 'hours').toDate(),
+          startsAt: moment(event.date_used).startOf('day').add(12, 'hours').toDate(),
+          endsAt: moment(event.date_used).startOf('day').add(20, 'hours').toDate(),
           color: calendarConfig.colorTypes.important,
           draggable: false,
           resizable: false,
@@ -88,8 +88,8 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
         });
         vm.events.push({
           title: 'Review Set: ' + event.set_name,
-          startsAt: moment(event.review_date).startOf('day').toDate().toDateString(),
-          endsAt: moment(event.review_date).startOf('day').add(23, 'hours').toDate(),
+          startsAt: moment(event.review_date).startOf('day').add(12, 'hours').toDate(),
+          endsAt: moment(event.review_date).startOf('day').add(20, 'hours').toDate(),
           color: calendarConfig.colorTypes.info,
           draggable: false,
           resizable: false,

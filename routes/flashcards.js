@@ -4,7 +4,17 @@
 //  Declare file as a router
 const router = require('express').Router();
 const multer = require('multer');
-const upload = multer({ dest: 'assets/'});
+
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'public/assets');
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+var upload = multer({ storage: storage });
 
 //  Import pool from connection.js
 const pool = require('../db/connection.js');
@@ -333,29 +343,33 @@ router.get('/card', function(req, res) {
   });
 });
 
-router.post('/images', function(req, res) {
-  pool.connect(function(err, client, done) {
-    try {
-      if (err) {
-        console.log('Error connecting to database:', err);
-        res.sendStatus(500);
-        return;
-      }
-      client.query('',
-        [],
-        function(err, result) {
-          if (err) {
-            console.log('Error querying database:', err);
-            res.sendStatus(500);
-            return;
-          }
-          console.log('Got rows from database:', result.rows);
-          res.send(result.rows);
-      });
-    } finally {
-      done();
-    }
-  });
+router.post('/images', upload.single('file'), function(req, res) {
+  console.log('Image upload');
+  console.log(req.file);
+  res.send(req.file);
+
+  // pool.connect(function(err, client, done) {
+  //   try {
+  //     if (err) {
+  //       console.log('Error connecting to database:', err);
+  //       res.sendStatus(500);
+  //       return;
+  //     }
+  //     client.query('',
+  //       [],
+  //       function(err, result) {
+  //         if (err) {
+  //           console.log('Error querying database:', err);
+  //           res.sendStatus(500);
+  //           return;
+  //         }
+  //         console.log('Got rows from database:', result.rows);
+  //         res.send(result.rows);
+  //     });
+  //   } finally {
+  //     done();
+  //   }
+  // });
 });
 
 module.exports = router;
