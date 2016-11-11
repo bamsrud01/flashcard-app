@@ -14,4 +14,25 @@ function ReviewService($http) {
     });
   }
 
+  service.getUserData = function(searchParams) {
+    return $http.get('/data', {
+      params: {
+        setId: searchParams.setId,
+        username: searchParams.username
+      }
+    }).then(function(response) {
+      return response.data;
+    });
+  }
+
+  service.sendUserData = function(sentData) {
+    return $http({
+      method: 'POST',
+      url: '/data',
+      data: sentData
+    }).then(function(response) {
+      return response.data;
+    });
+  }
+
 }

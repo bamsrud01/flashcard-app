@@ -1,4 +1,4 @@
-angular.module('flashcardApp', ['ngRoute', 'mwl.calendar', 'ui.bootstrap'])
+angular.module('flashcardApp', ['ngRoute', 'mwl.calendar', 'ui.bootstrap', 'ngFileUpload'])
   .controller('MainController', MainController);
 
 //  This controller is a parent of the other controllers

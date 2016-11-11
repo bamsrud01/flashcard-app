@@ -1,30 +1,35 @@
 angular.module('flashcardApp')
   .controller('ReviewController', ReviewController);
 
-function ReviewController(ReviewService, NavService) {
+function ReviewController(ReviewService, NavService, moment) {
   var review = this;
 
+  //  Imported values from NavService
   review.set = NavService.set;
   review.username = NavService.userData.username;
 
-  //  This object will hold data for the user_data table
-  review.reviewData = {
-    username: review.username,
-    setId: review.set.id
-  };
-  //  Needs: {username, set_id, date_used, correct, total, proficiency, review_date, favorited} receives {id}
 
+  //  Needs: {username, set_id, date_used, correct, total, proficiency, review_date, favorited} receives {id}
+  review.userHistory = {};
 
   //  Sets starting values for the review process, and gets the cards
   review.setUp = function() {
+    //  This object will hold data for the user_data table
+    review.reviewData = {
+      username: review.username,
+      setId: review.set.id,
+      favorited: false  //  Implement this ability later
+    };
+    //  Initiate starting values
     review.correct = 0;
     review.incorrect = 0;
     review.total = 0;
     review.cards = [];
     review.complete = false;
     review.question = true;
-    review.reviewData.dateUsed = new Date().toDateString();  //  Wed Nov 09 2016
+    review.reviewData.dateUsed = new Date();  //  Wed Nov 09 2016 with .toDateString()
     review.getCards();
+    review.getUserData();
   }
 
   //  Gets cards in the current set
@@ -39,6 +44,23 @@ function ReviewController(ReviewService, NavService) {
     });
   }
 
+  //  Get user data
+  review.getUserData = function() {
+    var searchParams = {
+      username: review.username,
+      setId: review.set.id
+    };
+    ReviewService.getUserData(searchParams).then(function(response) {
+      console.log('Data response:', response);
+      if (response.length < 1) {
+        review.userHistory.proficiency = 0;
+      }
+      else {
+        review.userHistory = response[0];
+      }
+    });
+  }
+
   //  Display one card at a time
   review.drawCard = function() {
     if (review.cards.length > 0) {
@@ -48,20 +70,76 @@ function ReviewController(ReviewService, NavService) {
       review.percentCorrect = (review.correct/review.total * 100).toFixed(2);
       review.reviewData.correct = review.correct;
       review.reviewData.total = review.total;
+      review.scheduleNext();
     }
     review.question = true;
   }
 
+  //  Function to run if answer is correct
   review.correctAnswer = function() {
     review.total++;
     review.correct++;
     review.drawCard();
   }
 
+  //  Function to run if answer is incorrect
   review.incorrectAnswer = function() {
     review.total++;
     review.incorrect++;
     review.drawCard();
+  }
+
+  //  Function takes the proficiency and the percentage, and determined the next scheduled date.
+  review.scheduleNext = function() {
+    //  Determine user proficiency by percent correct
+    review.reviewData.proficiency = review.userHistory.proficiency;
+    if (review.percentCorrect < 50) {
+      review.reviewData.proficiency -= 1;
+    } else if (review.percentCorrect >= 80) {
+      review.reviewData.proficiency += 1;
+    }
+    //  Make sure all values remain between 0 and 5
+    if (review.reviewData.proficiency < 0) {
+      review.reviewData.proficiency = 0;
+    }
+    if (review.reviewData.proficiency > 5) {
+      review.reviewData.proficiency = 5;
+    }
+    //  Determine the increment
+    switch (review.reviewData.proficiency) {
+      case 0:
+        review.numDays = 1;
+        break;
+      case 1:
+        review.numDays = 2;
+        break;
+      case 2:
+        review.numDays = 4;
+        break;
+      case 3:
+        review.numDays = 7;
+        break;
+      case 4:
+        review.numDays = 14;
+        break;
+      case 5:
+        review.numDays = 30;
+        break;
+    }
+    review.reviewData.reviewDate = moment(review.reviewData.dateUsed)
+      .add(review.numDays, 'days').toDate();
+    console.log('Proficiency:', review.reviewData.proficiency);
+    console.log('Number of days:', review.numDays);
+    console.log('Today\'s review:', review.reviewData.dateUsed.toDateString());
+    console.log('Next review:', review.reviewData.reviewDate);
+    console.log('Packed object:', review.reviewData);
+    review.sendUserData(review.reviewData);
+  }
+
+  review.sendUserData = function(sentData) {
+    ReviewService.sendUserData(sentData).then(function(response) {
+      console.log('Posted response:', response);
+    })
   }
 
   review.setUp();
@@ -70,7 +148,7 @@ function ReviewController(ReviewService, NavService) {
 
 }
 
-//  Function to shffle an array
+//  Function to shuffle an array
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));

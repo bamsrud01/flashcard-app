@@ -1,7 +1,7 @@
 angular.module('flashcardApp')
   .controller('CreateController', CreateController);
 
-function CreateController(CreateService, NavService) {
+function CreateController(CreateService, NavService, Upload) {
   var create = this;
 
   create.username = NavService.userData.username;
@@ -87,6 +87,22 @@ function CreateController(CreateService, NavService) {
       };
     });
   }
+
+  create.upload = function (file) {
+        Upload.upload({
+            url: 'upload/url',  //  Where does it go?  What does it do?
+            data: {file: file, 'username': $scope.username}
+        }).then(function (resp) {
+            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+        create.chooseQuestionImage = false;
+        create.chooseAnswerImage = false;
+    };
 
   //  Marks the completion of a set.
   create.completeSet = function() {
