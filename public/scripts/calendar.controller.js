@@ -19,50 +19,9 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
         alert.show('Deleted', args.calendarEvent);
       }
     }];
-    vm.events = [
-      {
-        title: 'An event',
-        color: calendarConfig.colorTypes.warning,
-        startsAt: moment().startOf('week').subtract(2, 'days').add(8, 'hours').toDate(),
-        endsAt: moment().startOf('week').add(1, 'week').add(9, 'hours').toDate(),
-        draggable: true,
-        resizable: true,
-        actions: actions,
-        incrementsBadgeTotal: false
-      }, {
-        title: '<i class="glyphicon glyphicon-asterisk"></i> <span class="text-primary">Another event</span>, with a <i>html</i> title',
-        color: calendarConfig.colorTypes.info,
-        startsAt: moment().subtract(1, 'day').toDate(),
-        endsAt: moment().add(5, 'days').toDate(),
-        draggable: true,
-        resizable: true,
-        actions: actions,
-        incrementsBadgeTotal: false
-      }, {
-        title: 'This is a really long event title that occurs on every year',
-        color: calendarConfig.colorTypes.important,
-        startsAt: moment().startOf('day').add(7, 'hours').toDate(),
-        endsAt: moment().startOf('day').add(19, 'hours').toDate(),
-        recursOn: 'year',
-        draggable: true,
-        resizable: true,
-        actions: actions,
-        incrementsBadgeTotal: false
-      }
-    ];
+    vm.events = [];
 
     vm.cellIsOpen = false;
-
-    vm.addEvent = function() {
-      vm.events.push({
-        title: 'New event',
-        startsAt: moment().startOf('day').toDate(),
-        endsAt: moment().endOf('day').toDate(),
-        color: calendarConfig.colorTypes.important,
-        draggable: true,
-        resizable: true
-      });
-    };
 
     // vm.eventClicked = function(event) {
     //   alert.show('Clicked', event);
@@ -105,4 +64,39 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
       }
 
     };
+
+    //  Function to get calendar info
+    vm.getCalendarInfo = function() {
+      CalendarService.getCalendarInfo(vm.username).then(function(response) {
+        console.log('Calendar events:', response);
+        vm.studyEvents = response;
+        vm.scheduleAll();
+        //  Returns array of objects {avg_rating, category, correct, date_used, description, favorited, id(sets), proficiency, review_date, set_id, set_name, total, username(sets?)}
+      });
+    }
+
+    vm.scheduleAll = function() {
+      vm.studyEvents.forEach(function(event) {
+        vm.events.push({
+          title: 'Set reviewed: ' + event.set_name,
+          startsAt: moment(event.date_used).startOf('day').toDate().toDateString(),
+          endsAt: moment(event.date_used).startOf('day').add(23, 'hours').toDate(),
+          color: calendarConfig.colorTypes.important,
+          draggable: false,
+          resizable: false,
+          incrementsBadgeTotal: false
+        });
+        vm.events.push({
+          title: 'Review Set: ' + event.set_name,
+          startsAt: moment(event.review_date).startOf('day').toDate().toDateString(),
+          endsAt: moment(event.review_date).startOf('day').add(23, 'hours').toDate(),
+          color: calendarConfig.colorTypes.info,
+          draggable: false,
+          resizable: false,
+          incrementsBadgeTotal: false
+        });
+      });
+    }
+
+    vm.getCalendarInfo();
 }

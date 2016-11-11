@@ -90,7 +90,7 @@ function CreateController(CreateService, NavService, Upload) {
 
   create.upload = function (file) {
         Upload.upload({
-            url: 'upload/url',  //  Where does it go?  What does it do?
+            url: 'flashcards/images',  //  Where does it go?  What does it do?
             data: {file: file, 'username': $scope.username}
         }).then(function (resp) {
             console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
