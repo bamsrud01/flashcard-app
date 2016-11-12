@@ -14,8 +14,8 @@ function CreateController(CreateService, NavService, Upload) {
   create.cards = [];
   create.newSet = {};
   create.activeCard = {
-    queImage: 'none',
-    ansImage: 'none'
+    q_image: 'none',
+    a_image: 'none'
   };
 
   //  Sets need: {category, description, set_name, username} receive: {id, avg-rating}
@@ -44,8 +44,8 @@ function CreateController(CreateService, NavService, Upload) {
       }
       create.cards.push(response[0]);
       create.activeCard = {
-        queImage: 'none',
-        ansImage: 'none'
+        q_image: 'none',
+        a_image: 'none'
       };
       create.cardComment = '';
     });
@@ -63,6 +63,7 @@ function CreateController(CreateService, NavService, Upload) {
     create.edit = true;
     create.editIndex = index;
     create.activeCard = card;
+    console.log(create.activeCard);
     CreateService.getComment(card).then(function(response) {
       if (response.length != 0) {
         create.commentId = response[0].id;
@@ -82,27 +83,43 @@ function CreateController(CreateService, NavService, Upload) {
         create.comment = false;
       }
       create.activeCard = {
-        queImage: 'none',
-        ansImage: 'none'
+        q_image: 'none',
+        a_image: 'none'
       };
     });
   }
 
+  //  Function to upload a question image
+  create.uploadQuestion = function(file) {
+    console.log('Upload question image');
+    create.upload(file).then(function(filename) {
+      create.activeCard.q_image = 'assets/' + filename;
+    });
+    create.chooseQuestionImage = false;
+  }
+
+  //  Function to upload an answer image
+  create.uploadAnswer = function(file) {
+    create.upload(file).then(function(filename) {
+      create.activeCard.a_image = 'assets/' + filename;
+    });
+    create.chooseAnswerImage = false;
+  }
+
+  //  Basic upload image function
   create.upload = function (file) {
-        Upload.upload({
+        return Upload.upload({
             url: 'flashcards/images',  //  Where does it go?  What does it do?
             data: {file: file, 'username': create.username}
         }).then(function (resp) {
             console.log('Success ' + resp.config.data.file.name + ' uploaded. Response: ' + resp.data.filename);
-            console.log(resp);
+            return resp.data.filename;
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
-        create.chooseQuestionImage = false;
-        create.chooseAnswerImage = false;
     };
 
   //  Marks the completion of a set.
@@ -110,8 +127,8 @@ function CreateController(CreateService, NavService, Upload) {
     create.cards = [];
     create.newSet = {};
     create.activeCard = {
-      queImage: 'none',
-      ansImage: 'none'
+      q_image: 'none',
+      a_image: 'none'
     };
     CreateService.completeSet();
   }

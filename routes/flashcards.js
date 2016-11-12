@@ -272,7 +272,7 @@ router.post('/card', function(req, res) {
       client.query('INSERT INTO cards' +
         ' (set_id, question, answer, q_image, a_image)' +
         ' VALUES ($1, $2, $3, $4, $5) RETURNING *;',
-        [card.Id, card.question, card.answer, card.queImage, card.ansImage],
+        [card.Id, card.question, card.answer, card.q_image, card.a_image],
         function(err, result) {
           if (err) {
             console.log('Error querying database:', err);
