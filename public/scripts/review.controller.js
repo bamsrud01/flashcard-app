@@ -54,9 +54,11 @@ function ReviewController(ReviewService, NavService, moment) {
       console.log('Data response:', response);
       if (response.length < 1) {
         review.userHistory.proficiency = 0;
+        review.lastDate = 'No previous date'
       }
       else {
         review.userHistory = response[0];
+        review.lastDate = new Date(review.userHistory.date_used).toDateString();
       }
     });
   }
@@ -91,49 +93,52 @@ function ReviewController(ReviewService, NavService, moment) {
 
   //  Function takes the proficiency and the percentage, and determined the next scheduled date.
   review.scheduleNext = function() {
-    //  Determine user proficiency by percent correct
-    review.reviewData.proficiency = review.userHistory.proficiency;
-    if (review.percentCorrect < 50) {
-      review.reviewData.proficiency -= 1;
-    } else if (review.percentCorrect >= 80) {
-      review.reviewData.proficiency += 1;
+    //  Only run this code if the user is logged in.
+    if (review.username != false) {
+      //  Determine user proficiency by percent correct
+      review.reviewData.proficiency = review.userHistory.proficiency;
+      if (review.percentCorrect < 50) {
+        review.reviewData.proficiency -= 1;
+      } else if (review.percentCorrect >= 80) {
+        review.reviewData.proficiency += 1;
+      }
+      //  Make sure all values remain between 0 and 5
+      if (review.reviewData.proficiency < 0) {
+        review.reviewData.proficiency = 0;
+      }
+      if (review.reviewData.proficiency > 5) {
+        review.reviewData.proficiency = 5;
+      }
+      //  Determine the increment
+      switch (review.reviewData.proficiency) {
+        case 0:
+          review.numDays = 1;
+          break;
+        case 1:
+          review.numDays = 2;
+          break;
+        case 2:
+          review.numDays = 4;
+          break;
+        case 3:
+          review.numDays = 7;
+          break;
+        case 4:
+          review.numDays = 14;
+          break;
+        case 5:
+          review.numDays = 30;
+          break;
+      }
+      review.reviewData.reviewDate = moment(review.reviewData.dateUsed)
+        .add(review.numDays, 'days').toDate().toDateString();
+      console.log('Proficiency:', review.reviewData.proficiency);
+      console.log('Number of days:', review.numDays);
+      console.log('Today\'s review:', review.reviewData.dateUsed);
+      console.log('Next review:', review.reviewData.reviewDate);
+      console.log('Packed object:', review.reviewData);
+      review.sendUserData(review.reviewData);
     }
-    //  Make sure all values remain between 0 and 5
-    if (review.reviewData.proficiency < 0) {
-      review.reviewData.proficiency = 0;
-    }
-    if (review.reviewData.proficiency > 5) {
-      review.reviewData.proficiency = 5;
-    }
-    //  Determine the increment
-    switch (review.reviewData.proficiency) {
-      case 0:
-        review.numDays = 1;
-        break;
-      case 1:
-        review.numDays = 2;
-        break;
-      case 2:
-        review.numDays = 4;
-        break;
-      case 3:
-        review.numDays = 7;
-        break;
-      case 4:
-        review.numDays = 14;
-        break;
-      case 5:
-        review.numDays = 30;
-        break;
-    }
-    review.reviewData.reviewDate = moment(review.reviewData.dateUsed)
-      .add(review.numDays, 'days').toDate().toDateString();
-    console.log('Proficiency:', review.reviewData.proficiency);
-    console.log('Number of days:', review.numDays);
-    console.log('Today\'s review:', review.reviewData.dateUsed);
-    console.log('Next review:', review.reviewData.reviewDate);
-    console.log('Packed object:', review.reviewData);
-    review.sendUserData(review.reviewData);
   }
 
   review.sendUserData = function(sentData) {

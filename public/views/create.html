@@ -51,8 +51,11 @@
             <h3 class="col-md-2">Question:</h3>
             <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - create.activeCard.question.length}}</h6>
             <button class="col-md-3 btn btn-default" ng-click="create.chooseQuestionImage = true">Add an Image</button>
-            <button ng-show="create.chooseQuestionImage" class="btn btn-warning col-md-6" ngf-select="create.uploadQuestion($file)">Upload Image</button>
-            <input type="text" ng-model="create.activeCard.q_image" class="col-md-6" placeholder="or paste an image URL" />
+            <div class="row" ng-show="create.chooseQuestionImage">
+              <button class="btn btn-warning col-md-4" ngf-select="create.uploadQuestion($file)">Upload Image</button>
+              <input type="text" ng-model="create.activeCard.q_image" class="col-md-4" placeholder="or paste an image URL" />
+            </div>
+
             <textarea class="form-control" rows="2" ng-model="create.activeCard.question"></textarea>
           </div>
         </div>
@@ -72,8 +75,10 @@
             <h3 class="col-md-2">Answer:</h3>
             <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - create.activeCard.answer.length}}</h6>
             <button class="col-md-3 btn btn-default" ng-click="create.chooseAnswerImage = true">Add an Image</button>
-            <button ng-show="create.chooseQuestionImage" class="btn btn-warning col-md-6" ngf-select="create.uploadAnswer($file)">Upload Image</button>
-            <input type="text" ng-model="create.activeCard.a_image" class="col-md-6" placeholder="or paste an image URL" />
+            <div class="row" ng-show="create.chooseQuestionImage">
+              <button class="btn btn-warning col-md-4" ngf-select="create.uploadAnswer($file)">Upload Image</button>
+              <input type="text" ng-model="create.activeCard.a_image" class="col-md-4" placeholder="or paste an image URL" />
+            </div>
             <textarea class="form-control" rows="2" ng-model="create.activeCard.answer"></textarea>
           </div>
           <div class="row">

@@ -44,14 +44,14 @@
       <div class="col-md-12" ng-repeat="card in cards.cardArray">
           <div class="col-md-6" ng-click="cards.viewCard(card)">
             <div class="col-md-12 cardDisplay bg-success">
-              <h3>{{card.question}}</h5>
-              <!-- If image, it goes here -->
+              <h3 class="col-md-5">{{card.question}}</h3>
+              <img class="col-md-7" ng-show="card.q_image != 'none'" ng-src="{{card.q_image}}" />
             </div>
           </div>
           <div class="col-md-6" ng-click="cards.viewCard(card)">
             <div class="col-md-12 cardDisplay answer">
-              <h3>{{card.answer}}</h5>
-              <!-- If image, it goes here -->
+              <h3 class="col-md-5">{{card.answer}}</h3>
+              <img class="col-md-7" ng-show="card.a_image != 'none'" ng-src="{{card.a_image}}" />
             </div>
           </div>
       </div>

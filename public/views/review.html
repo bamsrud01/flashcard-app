@@ -7,13 +7,17 @@
     <!-- Main section -->
     <div class="row" ng-hide="review.complete">
       <div ng-show="review.question" class="col-md-offset-2 col-md-8 cardDisplay bg-success">
-        <h2>{{review.active.question}}</h2>
-        <!-- If image, image goes here -->
+        <div class="row">
+          <h2 class="col-md-6">{{review.active.question}}</h2>
+          <img ng-show="review.active.q_image != 'none'" class="col-md-6" ng-src="{{review.active.q_image}}" />
+        </div>
       </div>
       <button ng-show="review.question" class="col-md-offset-2 col-md-8 btn btn-success" ng-click="review.question = false">Check Answer</button>
       <div ng-hide="review.question" class="col-md-offset-2 col-md-8 cardDisplay answer">
-        <h2>{{review.active.answer}}</h2>
-        <!-- If image, image goes here -->
+        <div class="row">
+          <h2 class="col-md-6">{{review.active.answer}}</h2>
+          <img ng-show="review.active.a_image != 'none'" class="col-md-6" ng-src="{{review.active.a_image}}" />
+        </div>
       </div>
       <div ng-hide="review.question" class="col-md-offset-2 col-md-8">
         <button class="col-md-5 btn btn-success" ng-click="review.correctAnswer()">Correct</button>
@@ -23,7 +27,7 @@
     <div class="row" ng-show="review.complete">
       <div class="row">
         <h2 class="col-md-offset-1 col-md-5">Correct: {{review.correct}}/{{review.total}}</h2>
-        <h2 class="col-md-offset-1 col-md-5">Last Review: {{review.userData.lastDate}}</h2>
+        <h2 class="col-md-offset-1 col-md-5">Last Review: {{review.lastDate}}</h2>
       </div>
       <div class="gap"></div>
       <div class="row">
