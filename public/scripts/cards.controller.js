@@ -1,7 +1,7 @@
 angular.module('flashcardApp')
   .controller('CardsController', CardsController);
 
-function CardsController(CardsService, NavService, $location) {
+function CardsController(CardsService, NavService, Upload, $location) {
   var cards = this;
 
   //  Information from NavService.  Included are the active username and set ID
@@ -15,6 +15,9 @@ function CardsController(CardsService, NavService, $location) {
   //  These valuee will change according to what kind of service is being used.
   cards.methodType = '';
   cards.setMethodType = '';
+
+  cards.chooseQuestionImage = false;
+  cards.chooseAnswerImage = false;
 
   //  Get all card information belonging to the currently active set
   cards.getCards = function() {
@@ -32,6 +35,16 @@ function CardsController(CardsService, NavService, $location) {
     cards.setCommentCheck();
     cards.showSetComments(cards.set);
   };
+
+  cards.update = function(index) {
+    cards.cardToUpdate = cards.cardArray[index];
+    CardsService.update(cards.cardToUpdate).then(function(response) {
+      console.log('Card updated:', response);
+      cards.getCards90;
+      cards.chooseQuestionImage = false;
+      cards.chooseAnswerImage = false;
+    })
+  }
 
   //  Activate card information on click
   cards.viewCard = function(card) {
@@ -112,6 +125,37 @@ function CardsController(CardsService, NavService, $location) {
       cards.allSetComments = response;
     })
   }
+
+  //  Function to upload a question image
+  cards.uploadQuestion = function(file, index) {
+    console.log('Upload question image');
+    cards.upload(file).then(function(filename) {
+      cards.cardArray[index].q_image = 'assets/' + filename;
+    });
+  }
+
+  //  Function to upload an answer image
+  cards.uploadAnswer = function(file, index) {
+    cards.upload(file).then(function(filename) {
+      cards.cardArray[index].a_image = 'assets/' + filename;
+    });
+  }
+
+  //  Basic upload image function
+  cards.upload = function (file) {
+        return Upload.upload({
+            url: 'flashcards/images',  //  Where does it go?  What does it do?
+            data: {file: file, 'username': cards.username}
+        }).then(function (resp) {
+            console.log('Success ' + resp.config.data.file.name + ' uploaded. Response: ' + resp.data.filename);
+            return resp.data.filename;
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+    };
 
   cards.reviewCards = function() {
     $location.path('/review');

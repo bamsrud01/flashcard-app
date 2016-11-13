@@ -22,27 +22,27 @@
 
   <div class="row">
     <div ng-hide="register.newUsername" class="alert alert-success">
-      <h4>Please choose a username.</h4>
+      <h4 class="center-text">Please choose a username.</h4>
     </div>
   </div>
   <div class="row">
     <div ng-show="register.userData.existingUsername" class="alert alert-warning">
-      <h4>Sorry, that username has already been chosen.</h4>
+      <h4 class="center-text">Sorry, that username has already been chosen.</h4>
     </div>
   </div>
   <div class="row">
     <div ng-hide="register.userData.validEmail || register.newEmail == undefined" class="alert alert-warning">
-      <h4>Please enter a valid email address.</h4>
+      <h4 class="center-text">Please enter a valid email address.</h4>
     </div>
   </div>
   <div class="row">
     <div ng-hide="register.newPassword.length >= 8 || register.newPassword == undefined" class="alert alert-warning">
-      <h4>Your password must be at least 8 characters long.</h4>
+      <h4 class="center-text">Your password must be at least 8 characters long.</h4>
     </div>
   </div>
   <div class="row">
     <div ng-hide="register.newPassword == register.confirmPassword" class="alert alert-danger">
-      <h4>Passwords must match!</h4>
+      <h4 class="center-text">Passwords must match!</h4>
     </div>
   </div>
   <div class="row">

@@ -84,6 +84,16 @@ function CardsService($http) {
     });
   }
 
+  service.update = function(card) {
+    return $http({
+      method: 'PUT',
+      url: '/flashcards/card',
+      data: card
+    }).then(function(response) {
+      return response.data;
+    });
+  }
+
   service.reviewCards = function() {
 
   }
