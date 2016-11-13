@@ -24,7 +24,7 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
     vm.cellIsOpen = false;
 
     // vm.eventClicked = function(event) {
-    //   alert.show('Clicked', event);
+    //   console.log('Clicked', event);
     // };
     //
     // vm.eventEdited = function(event) {
@@ -46,7 +46,8 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
     };
 
     vm.timespanClicked = function(date, cell) {
-
+      console.log('Clicked cell:', date, cell);
+      vm.chosenDate = date.toDateString();
       if (vm.calendarView === 'month') {
         if ((vm.cellIsOpen && moment(date).startOf('day').isSame(moment(vm.viewDate).startOf('day'))) || cell.events.length === 0 || !cell.inMonth) {
           vm.cellIsOpen = false;
@@ -62,8 +63,21 @@ function CalendarController(CalendarService, NavService, moment, alert, calendar
           vm.viewDate = date;
         }
       }
+      console.log('CONTROLLER sending:', vm.username, date);
+      vm.getDateEvents(vm.username, vm.chosenDate);
 
     };
+
+    vm.getDateEvents = function(username, date) {
+      CalendarService.getDateEvents(username, date).then(function(response) {
+        vm.eventsOnDate = response;
+        vm.eventsOnDate.forEach(function(event) {
+          event.date_used = new Date(event.date_used).toDateString();
+          event.review_date = new Date(event.review_date).toDateString();
+        });
+        console.log('Date selected:', vm.eventsOnDate);
+      })
+    }
 
     //  Function to get calendar info
     vm.getCalendarInfo = function() {

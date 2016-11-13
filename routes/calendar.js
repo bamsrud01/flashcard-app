@@ -33,6 +33,35 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/date', function(req, res) {
+  var username = req.query.username;
+  var date = req.query.date;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT * FROM user_data ' +
+        'JOIN sets ON user_data.set_id = sets.id WHERE ' +
+        'user_data.username=$1 AND ' +
+        'date_used=$2 OR review_date=$2;', [username, date],
+        function(err, result) {
+          if (err) {
+            console.log('Error querying database:', err);
+            res.sendStatus(500);
+            return;
+          }
+          console.log('Got rows from database(rating):', result.rows);
+          res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
 
 
 module.exports = router;

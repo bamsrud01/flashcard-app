@@ -17,7 +17,7 @@
               mwl-date-modifier
               date="vm.viewDate"
               set-to-today>
-              Today
+              Current
             </button>
             <button
               class="btn btn-primary"
@@ -31,30 +31,43 @@
 
         <br class="visible-xs visible-sm">
 
-        <div class="col-md-6 text-center">
+        <!-- <div class="col-md-6 text-center">
           <div class="btn-group">
             <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'year'">Year</label>
             <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'month'">Month</label>
             <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'week'">Week</label>
             <label class="btn btn-primary" ng-model="vm.calendarView" uib-btn-radio="'day'">Day</label>
           </div>
-        </div>
+        </div> -->
 
       </div>
+      <div class="row">
+        <mwl-calendar
+            class="col-md-8"
+            events="vm.events"
+            view="vm.calendarView"
+            view-title="vm.calendarTitle"
+            view-date="vm.viewDate"
+            on-event-click="vm.eventClicked(calendarEvent)"
+            on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+            cell-is-open="vm.cellIsOpen"
+            day-view-start="06:00"
+            day-view-end="22:59"
+            day-view-split="30"
+            cell-modifier="vm.modifyCell(calendarCell)"
+            cell-auto-open-disabled="true"
+            on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
+          </mwl-calendar>
+          <aside class="col-md-offset-1 col-md-3 bg-info right-aside">
+            <h2 class="center-text">{{vm.chosenDate}}</h2>
+            <div class="col-md-offset-1 col-md-10 bg-primary divide"></div>
+            <div class="col-md-offset-1 col-md-10" ng-repeat="event in vm.eventsOnDate">
+              <h3>{{event.set_name}}</h3>
+              <h5>Last Reviewed: {{event.date_used}}</h5>
+              <h6>Performance: {{event.correct}}/{{event.total}}</h6>
+              <h5>Review On: {{event.review_date}}</h5>
+              <div class="col-md-12 bg-primary divide"></div>
+            </div>
+          </aside>
 
-      <mwl-calendar
-          class="col-md-8"
-          events="vm.events"
-          view="vm.calendarView"
-          view-title="vm.calendarTitle"
-          view-date="vm.viewDate"
-          on-event-click="vm.eventClicked(calendarEvent)"
-          on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
-          cell-is-open="vm.cellIsOpen"
-          day-view-start="06:00"
-          day-view-end="22:59"
-          day-view-split="30"
-          cell-modifier="vm.modifyCell(calendarCell)"
-          cell-auto-open-disabled="true"
-          on-timespan-click="vm.timespanClicked(calendarDate, calendarCell)">
-        </mwl-calendar>
+      </div>

@@ -27,7 +27,7 @@ function ReviewController(ReviewService, NavService, moment) {
     review.cards = [];
     review.complete = false;
     review.question = true;
-    review.reviewData.dateUsed = new Date();  //  Wed Nov 09 2016 with .toDateString()
+    review.reviewData.dateUsed = new Date().toDateString();  //  Wed Nov 09 2016 with .toDateString()
     review.getCards();
     review.getUserData();
   }
@@ -127,10 +127,10 @@ function ReviewController(ReviewService, NavService, moment) {
         break;
     }
     review.reviewData.reviewDate = moment(review.reviewData.dateUsed)
-      .add(review.numDays, 'days').toDate();
+      .add(review.numDays, 'days').toDate().toDateString();
     console.log('Proficiency:', review.reviewData.proficiency);
     console.log('Number of days:', review.numDays);
-    console.log('Today\'s review:', review.reviewData.dateUsed.toDateString());
+    console.log('Today\'s review:', review.reviewData.dateUsed);
     console.log('Next review:', review.reviewData.reviewDate);
     console.log('Packed object:', review.reviewData);
     review.sendUserData(review.reviewData);

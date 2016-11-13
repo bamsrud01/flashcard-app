@@ -49,6 +49,8 @@ function CreateController(CreateService, NavService, Upload) {
       };
       create.cardComment = '';
     });
+    create.chooseQuestionImage = false;
+    create.chooseAnswerImage = false;
   }
 
   //  This function adds a comment to the associated card.  It only runs if the create.comment value is true.
@@ -87,6 +89,8 @@ function CreateController(CreateService, NavService, Upload) {
         a_image: 'none'
       };
     });
+    create.chooseQuestionImage = false;
+    create.chooseAnswerImage = false;
   }
 
   //  Function to upload a question image
@@ -95,7 +99,6 @@ function CreateController(CreateService, NavService, Upload) {
     create.upload(file).then(function(filename) {
       create.activeCard.q_image = 'assets/' + filename;
     });
-    create.chooseQuestionImage = false;
   }
 
   //  Function to upload an answer image
@@ -103,7 +106,6 @@ function CreateController(CreateService, NavService, Upload) {
     create.upload(file).then(function(filename) {
       create.activeCard.a_image = 'assets/' + filename;
     });
-    create.chooseAnswerImage = false;
   }
 
   //  Basic upload image function
