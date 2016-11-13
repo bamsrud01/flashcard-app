@@ -49,6 +49,7 @@ function CardsController(CardsService, NavService, $location) {
       if (response.length < 1) {
         //  User has not commented, AJAX method set to POST
         cards.methodType = 'POST';
+        cards.cardComment = '';
       } else {
         //  User has commented, AJAX method set to PUT
         cards.cardComment = response[0].comment;
