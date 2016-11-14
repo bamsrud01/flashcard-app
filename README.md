@@ -14,6 +14,7 @@ This application allows users to create sets of flashcards and use them for stud
 
 ## Future Goals
 
+- Add different modes, such as providing multiple possible choices, and asking the user to pick the correct answer
 - Ability to rate and favorite flashcard sets
 - Improve visual information in calendar
 - Allow updates to be made more easily
