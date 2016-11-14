@@ -7,6 +7,7 @@ function CardsController(CardsService, NavService, Upload, $location) {
   //  Information from NavService.  Included are the active username and set ID
   cards.username = NavService.userData.username;
   cards.set = NavService.set;
+  cards.editable = (cards.username == cards.set.username)
 
   //  This array will hold all comments on a specific card and the set
   cards.allComments = [];

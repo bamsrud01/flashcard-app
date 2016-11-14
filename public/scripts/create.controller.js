@@ -67,6 +67,7 @@ function CreateController(CreateService, NavService, Upload) {
     create.activeCard = card;
     console.log(create.activeCard);
     CreateService.getComment(card).then(function(response) {
+      create.cardComment = '';
       if (response.length != 0) {
         create.commentId = response[0].id;
         create.cardComment = response[0].comment;
