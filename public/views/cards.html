@@ -80,10 +80,10 @@
                 <h6 class="col-md-offset-4 col-md-3">Remaining: {{255 - card.answer.length}}</h6>
                 <button class="col-md-3 btn btn-default" ng-click="cards.chooseAnswerImage = true">Add Image</button>
                 <div class="row" ng-show="cards.chooseAnswerImage">
-                  <button class="btn btn-warning col-md-4" ngf-select="cards.uploadQuestion($file, $index)">Upload Image</button>
-                  <input type="text" ng-model="card.q_image" class="col-md-4" placeholder="or paste an image URL" />
+                  <button class="btn btn-warning col-md-4" ngf-select="cards.uploadAnswer($file, $index)">Upload Image</button>
+                  <input type="text" ng-model="card.a_image" class="col-md-4" placeholder="or paste an image URL" />
                 </div>
-                <textarea class="form-control" rows="2" ng-model="card.question"></textarea>
+                <textarea class="form-control" rows="2" ng-model="card.answer"></textarea>
               </div>
             </div>
           </div>
