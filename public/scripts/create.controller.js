@@ -61,6 +61,7 @@ function CreateController(CreateService, NavService, Upload) {
 
   //  This function will run if the user clicks on previously-created cards in the sidebar.
   create.editCard = function(card, index) {
+    create.addCard();
     card.username = create.username;
     create.edit = true;
     create.editIndex = index;
@@ -127,6 +128,7 @@ function CreateController(CreateService, NavService, Upload) {
 
   //  Marks the completion of a set.
   create.completeSet = function() {
+    create.addCard();
     create.cards = [];
     create.newSet = {};
     create.activeCard = {
