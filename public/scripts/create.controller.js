@@ -1,6 +1,11 @@
 angular.module('flashcardApp')
   .controller('CreateController', CreateController);
 
+/*
+  There's a bug here!  Editing or viewing previously-created cards may duplicate that card in the final set.
+*/
+
+
 function CreateController(CreateService, NavService, Upload) {
   var create = this;
 
@@ -37,18 +42,22 @@ function CreateController(CreateService, NavService, Upload) {
     create.activeCard.Id = create.currentId;
     CreateService.addCard(create.activeCard).then(function(response) {
       //  Returns array of objects {id, question, answer, set_id, q_image, a_image}
+      //  Check to see if a comment exists, assign to card ID from response.
       if (create.comment) {
         create.addComment(response[0].id, create.cardComment, create.username);
         create.comment = false;
-
       }
+      //  Add created card to the card array
       create.cards.push(response[0]);
+      //  Clear image for questions and answers
       create.activeCard = {
         q_image: 'none',
         a_image: 'none'
       };
+      //  Clear card comment
       create.cardComment = '';
     });
+    //  Clear image choice display for questions and answers
     create.chooseQuestionImage = false;
     create.chooseAnswerImage = false;
   }
@@ -61,6 +70,7 @@ function CreateController(CreateService, NavService, Upload) {
 
   //  This function will run if the user clicks on previously-created cards in the sidebar.
   create.editCard = function(card, index) {
+    //  Adds previous card
     create.addCard();
     card.username = create.username;
     create.edit = true;
