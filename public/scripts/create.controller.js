@@ -78,10 +78,11 @@ function CreateController(CreateService, NavService, Upload) {
     create.activeCard = card;
     console.log(create.activeCard);
     CreateService.getComment(card).then(function(response) {
-      create.cardComment = '';
       if (response.length != 0) {
         create.commentId = response[0].id;
         create.cardComment = response[0].comment;
+      } else {
+        create.cardComment = '';
       }
 
     });
@@ -120,10 +121,10 @@ function CreateController(CreateService, NavService, Upload) {
     });
   }
 
-  //  Basic upload image function
+  //  Basic upload image function using multer
   create.upload = function (file) {
         return Upload.upload({
-            url: 'flashcards/images',  //  Where does it go?  What does it do?
+            url: 'flashcards/images',
             data: {file: file, 'username': create.username}
         }).then(function (resp) {
             console.log('Success ' + resp.config.data.file.name + ' uploaded. Response: ' + resp.data.filename);
