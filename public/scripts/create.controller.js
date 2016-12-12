@@ -28,23 +28,30 @@ function CreateController(CreateService, NavService, Upload) {
 
   //  This function creates a new set.  All cards created will be part of this set.
   create.createSet = function() {
+    //  Set the username of the created set to the logged-in user
     create.newSet.username = create.username;
     CreateService.createSet(create.newSet).then(function(response){
       //  Returns array of objects {avg_rating, category, description, id, set_name, username}
+      //  set object in NavService will be set to the created set
       NavService.set = response[0];
+      //  All created cards will belong to the active set.  Here, the set id is assigned
       create.currentId = response[0].id;
+      //  Hide the new set options, and show the card creation options
       create.showNewSet = false;
     });
   }
 
   //  This function adds a card to the set.
   create.addCard = function() {
+    //  Every time a card is created, it is assigned to the active set by the set ID
     create.activeCard.Id = create.currentId;
     CreateService.addCard(create.activeCard).then(function(response) {
       //  Returns array of objects {id, question, answer, set_id, q_image, a_image}
       //  Check to see if a comment exists, assign to card ID from response.
       if (create.comment) {
+        //  Add a comment with body and username to the card ID
         create.addComment(response[0].id, create.cardComment, create.username);
+        //  After submitting, reset the comment value
         create.comment = false;
       }
       //  Add created card to the card array
@@ -65,6 +72,7 @@ function CreateController(CreateService, NavService, Upload) {
   //  This function adds a comment to the associated card.  It only runs if the create.comment value is true.
   create.addComment = function(Id, comment, username) {
     CreateService.addComment(Id, comment, username).then(function(response) {
+      console.log('Comment added:', response);
     });
   }
 
@@ -73,10 +81,12 @@ function CreateController(CreateService, NavService, Upload) {
     //  Adds previous card
     create.addCard();
     card.username = create.username;
+    //  Shows the edit button
     create.edit = true;
-    create.editIndex = index;
+    // create.editIndex = index;
     create.activeCard = card;
     console.log(create.activeCard);
+    //  Get any comments on the selected card
     CreateService.getComment(card).then(function(response) {
       if (response.length != 0) {
         create.commentId = response[0].id;
@@ -93,15 +103,18 @@ function CreateController(CreateService, NavService, Upload) {
     CreateService.updateCard(create.activeCard).then(function(response) {
       create.edit = false;
       create.cards[create.index] = response;
+      //  Check if a comment exists, update, and reset value
       if (create.comment) {
         CreateService.updateComment(create.cardComment, create.commentId);
         create.comment = false;
       }
+      //  Reset image values
       create.activeCard = {
         q_image: 'none',
         a_image: 'none'
       };
     });
+    //  Reset image select options
     create.chooseQuestionImage = false;
     create.chooseAnswerImage = false;
   }
@@ -139,7 +152,7 @@ function CreateController(CreateService, NavService, Upload) {
 
   //  Marks the completion of a set.
   create.completeSet = function() {
-    create.addCard();
+    // create.addCard();
     create.cards = [];
     create.newSet = {};
     create.activeCard = {
