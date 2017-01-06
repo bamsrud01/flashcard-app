@@ -47,7 +47,7 @@ app.use('/calendar', calendar);
 app.use('/data', data);
 
 //  Create port
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 5000;
 
 //  Authentication required beyond this line
 app.use(ensureAuthenticated);

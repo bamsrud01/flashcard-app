@@ -79,7 +79,7 @@ function CreateController(CreateService, NavService, Upload) {
   //  This function will run if the user clicks on previously-created cards in the sidebar.
   create.editCard = function(card, index) {
     //  Adds previous card
-    create.addCard();
+    // create.addCard();            ////////  This is the error!!!
     card.username = create.username;
     //  Shows the edit button
     create.edit = true;
