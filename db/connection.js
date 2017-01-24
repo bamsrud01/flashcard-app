@@ -3,7 +3,7 @@ const pg = require('pg');
 
 //  Set database
 var config= {
-  database: 'solo'
+  // database: 'solo'
 };
 
 //  Set connection pool
