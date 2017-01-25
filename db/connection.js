@@ -2,6 +2,9 @@
 const pg = require('pg');
 const url = require('url');
 
+const params = url.parse(process.env.DATABASE_URL);
+const auth = params.auth.split(':');
+
 //  Set database
 var config = {
   // database: 'solo'
@@ -12,8 +15,7 @@ var config = {
   database: params.pathname.split('/')[1],
   ssl: true
 };
-const params = url.parse(process.env.DATABASE_URL);
-const auth = params.auth.split(':');
+
 
 //  Set connection pool
 var pool = new pg.Pool(config);
