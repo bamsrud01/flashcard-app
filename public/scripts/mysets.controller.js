@@ -54,5 +54,9 @@ function MySetsController(MySetsService, NavService) {
     })
   }
 
+  mine.deleteSet = function(setId) {
+    console.log('Deleting set: ' + setId)
+  }
+
   mine.displayMySets();
 }

@@ -96,7 +96,7 @@ router.get('/favorite', function(req, res) {
   });
 });
 
-//GET all card sets by chosen category (Home)
+//  GET all card sets by chosen category (Home)
 router.get('/category', function(req, res) {
   var category = req.query.category;
   pool.connect(function(err, client, done) {
@@ -336,6 +336,60 @@ router.get('/card', function(req, res) {
         }
         console.log('Got rows from database:', result.rows);
         res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  DELETE card from set (NOTE: Does not delete comments)
+router.delete('/card', function(req, res) {
+  var cardId = req.query.cardId
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('DELETE FROM cards ' +
+      'WHERE id=$1;',
+      [cardId], function(err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Deleted card');
+        res.sendStatus(204);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  DELETE entire set (NOTE: Does not delete cards or comments)
+router.delete('/set', function(req, res) {
+  var setId = req.query.setId
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('DELETE FROM sets ' +
+      'WHERE id=$1;',
+      [setId], function(err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Deleted set');
+        res.sendStatus(204);
       });
     } finally {
       done();

@@ -19,6 +19,7 @@
           <h4>{{set.description}}</h4>
           <h5>{{set.category}}</h5>
           <p><a href="/cards" ng-show="mine.currentSelected == set.id" class="col-md-12 btn btn-lg btn-success">Practice this set!</a></p>
+          <button class="btn btn-danger" ng-click="mine.deleteSet(set.id)">Delete Set</button>
         </div>
       </div>
     </div>
