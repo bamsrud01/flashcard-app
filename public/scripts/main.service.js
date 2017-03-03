@@ -19,7 +19,11 @@ function MainService($http, $location, $q) {
 
   //  Handle user deletion
   service.deleteUser = function(username) {
-    return $http.delete('/register').then(function() {
+    return $http.delete('/register', {
+      params: {
+        username: username
+      }
+    }).then(function() {
       console.log('Service confirms user deletion');
       return $location.path('/home');
     });
