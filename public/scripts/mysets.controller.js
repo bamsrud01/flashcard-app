@@ -56,6 +56,8 @@ function MySetsController(MySetsService, NavService) {
 
   mine.deleteSet = function(setId) {
     console.log('Deleting set: ' + setId)
+    var confirmDelete = confirm('Are you sure you want to delete this set?');
+    console.log('Confirmation: ' + confirmDelete);
   }
 
   mine.displayMySets();
