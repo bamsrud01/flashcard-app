@@ -61,5 +61,32 @@ router.post('/logout', function(req, res) {
   res.sendStatus(200);
 });
 
+//  DELETE a user
+router.delete('/', function(req, res) {
+  var username = req.query.username
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('DELETE FROM users ' +
+      'WHERE username=$1;',
+      [username], function(err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Deleted user: ' + username);
+        res.sendStatus(204);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
 //  Export router
 module.exports = router;
