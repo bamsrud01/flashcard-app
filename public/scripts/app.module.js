@@ -25,6 +25,10 @@ function MainController(NavService, MainService) {
     });
   }
 
+  main.deleteUser = function() {
+    console.log({main.login.username});
+  }
+
   main.logOutUser = function() {
     main.loginFail = false;
     MainService.logOutUser().then(function() {
