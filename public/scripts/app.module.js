@@ -28,7 +28,7 @@ function MainController(NavService, MainService) {
   main.deleteUser = function() {
     console.log('Function works');
     if(main.nav.state.loggedIn) {
-      console.log('User:', main.login.username);
+      console.log('User:', main.nav.userData.username);
     }
   }
 
