@@ -3,7 +3,7 @@ angular.module('flashcardApp')
 
 function MySetsService($http) {
   var service = this;
-  
+
   //  GET all card sets
   service.getCardSets = function(myUsername) {
     return $http.get('/flashcards/all-sets/mine', {
@@ -60,6 +60,17 @@ function MySetsService($http) {
     }).then(function(response) {
       return response.data;
     })
+  }
+
+  //  DELETE set of cards
+  service.deleteSet = function(setId) {
+    return $http.delete('/flashcards/set', {
+      params: {
+        setId: setId
+      }
+    }).then(function(response) {
+      console.log('Response from set delete: ' + response);
+    });
   }
 
 }
